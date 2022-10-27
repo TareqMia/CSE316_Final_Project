@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { StrictMode, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import SongCard from './SongCard.js'
 import MUIEditSongModal from './MUIEditSongModal'
@@ -23,6 +23,11 @@ function WorkspaceScreen() {
     else if (store.isRemoveSongModalOpen()) {
         modalJSX = <MUIRemoveSongModal />;
     }
+
+    if (!store.currentList) {
+        return null;
+    }
+
     return (
         <Box>
         <List 
