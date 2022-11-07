@@ -36,11 +36,9 @@ function SongCard(props) {
     function handleRemoveSong(event) {
         store.showRemoveSongModal(index, song);
     }
-    function handleClick(event) {
-        // DOUBLE CLICK IS FOR SONG EDITING
-        if (event.detail === 2) {
-            store.showEditSongModal(index, song);
-        }
+    
+    function handleEditSong(event) {
+        store.showEditSongModal(index, song);
     }
 
     let cardClass = "list-card unselected-list-card";
@@ -55,11 +53,12 @@ function SongCard(props) {
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
             draggable="true"
-            onClick={handleClick}
+            onDoubleClick={handleEditSong}
         >
             {index + 1}.
             <a
                 id={'song-' + index + '-link'}
+                target='_blank'
                 className="song-link"
                 href={"https://www.youtube.com/watch?v=" + song.youTubeId}>
                 {song.title} by {song.artist}
