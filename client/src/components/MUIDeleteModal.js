@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import GlobalStoreContext from '../store';
 import * as React from 'react';
-import Box from '@mui/material/Box';
+import { Box, Button, Grid, Typography  } from '@mui/material';
 import Modal from '@mui/material/Modal';
 
 const style = {
@@ -9,7 +9,7 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    width: 500,
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
@@ -34,23 +34,29 @@ export default function MUIDeleteModal() {
             open={store.listMarkedForDeletion !== null}
         >
             <Box sx={style}>
-                <div className="modal-dialog">
-                <header className="dialog-header">
-                    Delete the {name} Top 5 List?
-                </header>
-                <div id="confirm-cancel-container">
-                    <button
-                        id="dialog-yes-button"
-                        className="modal-button"
-                        onClick={handleDeleteList}
-                    >Confirm</button>
-                    <button
-                        id="dialog-no-button"
-                        className="modal-button"
-                        onClick={handleCloseModal}
-                    >Cancel</button>
-                </div>
-            </div>
+                <Grid container spacing={1}>
+                    <Grid item xs={12}>
+                        <Typography component='h1' variant='h4'>
+                            Are you sure you would like to permanently delete the playlist: {name}?
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Box
+                            component='span'
+                            m={1}
+                            display='flex'
+                            justifyContent='space-between'
+                            alignItems='center'
+                        >
+                            <Button variant='contained' onClick={handleDeleteList}>
+                                Confirm
+                            </Button>{' '}
+                            <Button variant='contained' onClick={handleCloseModal}>
+                                Cancel
+                            </Button>
+                        </Box>
+                    </Grid>
+                </Grid>
             </Box>
         </Modal>
     );
