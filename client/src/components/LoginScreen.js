@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import AuthContext from '../auth'
 
 import Copyright from './Copyright'
+import AuthErrorModal from './MUIAuthErrorModal';
 
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
@@ -32,6 +33,7 @@ export default function LoginScreen() {
     return (
         <Grid container component="main" sx={{ height: '100vh' }}>
             <CssBaseline />
+            {auth.errMsg === null ? null : <AuthErrorModal />}
             <Grid
                 item
                 xs={false}

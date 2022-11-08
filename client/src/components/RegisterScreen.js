@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import AuthContext from '../auth'
 import Copyright from './Copyright'
+import AuthErrorModal from './MUIAuthErrorModal';
 
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
@@ -26,7 +27,6 @@ export default function RegisterScreen() {
             formData.get('password'),
             formData.get('passwordVerify')
         );
-        auth.loginUser(formData.get('email'), formData.get('password'));
     };
 
     return (
@@ -120,6 +120,7 @@ export default function RegisterScreen() {
                     </Box>
                 </Box>
                 <Copyright sx={{ mt: 5 }} />
+                {auth.errMsg === '' ? null : <AuthErrorModal />}
             </Container>
     );
 }
