@@ -101,7 +101,7 @@ export default function AppBanner() {
                         <Link style={{ textDecoration: 'none', color: 'white' }} to='/'>⌂</Link>
                     </Typography>
                     <Box sx={{ flexGrow: 1 }}>{editToolbar}</Box>
-                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                    {auth.loggedIn ? <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                         <IconButton
                             size="large"
                             edge="end"
@@ -113,7 +113,8 @@ export default function AppBanner() {
                         >
                             { getAccountMenu(auth.loggedIn) }
                         </IconButton>
-                    </Box>
+                    </Box> : null }
+                    
                 </Toolbar>
             </AppBar>
             {
