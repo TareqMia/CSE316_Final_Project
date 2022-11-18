@@ -9,6 +9,7 @@ export default function SplashScreen () {
             display='flex' 
             flexDirection='column' 
             width='340px'
+            justifyContent='center'
             
             >
             <Typography variant="h2" gutterBottom
