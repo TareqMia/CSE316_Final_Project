@@ -5,6 +5,9 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
+import YouTube from 'react-youtube';
+import YouTubePlayerExample from './YouTubePlayerExample';
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -49,19 +52,18 @@ export default function MUITabs() {
     <Box sx={{ width: '100%'}}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Item One" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
+          <Tab label="YouTube Player" {...a11yProps(0)} />
+          <Tab label="Comments" {...a11yProps(1)} />
+          
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        Item One
+        <div>
+            <YouTubePlayerExample />
+        </div>
       </TabPanel>
       <TabPanel value={value} index={1}>
         Item Two
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        Item Three
       </TabPanel>
     </Box>
   );
