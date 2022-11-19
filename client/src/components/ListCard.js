@@ -6,6 +6,10 @@ import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import ListItem from '@mui/material/ListItem';
 import TextField from '@mui/material/TextField';
+import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 
 /*
     This is a card in our list of top 5 lists. It lets select
@@ -19,6 +23,8 @@ function ListCard(props) {
     const [editActive, setEditActive] = useState(false);
     const [text, setText] = useState("");
     const { idNamePair, selected } = props;
+
+    const isPublished = idNamePair.published;
 
     function handleLoadList(event, id) {
         console.log("handleLoadList for " + id);
@@ -34,9 +40,13 @@ function ListCard(props) {
         }
     }
 
-    function handleToggleEdit(event) {
+    function handleToggleEdit(event, id) {
         event.stopPropagation();
-        toggleEdit();
+        store.setCurrentList(id);
+        console.log(store.currentList.published);
+        if (store.currentList && !store.currentList.published) {
+            toggleEdit();
+        }
     }
 
     function toggleEdit() {
@@ -47,11 +57,11 @@ function ListCard(props) {
         setEditActive(newActive);
     }
 
-    async function handleDeleteList(event, id) {
+    async function handleDeleteList(event) {
         event.stopPropagation();
         let _id = event.target.id;
         _id = ("" + _id).substring("delete-list-".length);
-        store.markListForDeletion(id);
+        store.markListForDeletion(_id);
     }
 
     function handleKeyPress(event) {
@@ -73,18 +83,72 @@ function ListCard(props) {
     if (store.isListNameEditActive) {
         cardStatus = true;
     }
-    let cardElement =
+    let cardElement = 
         <ListItem
+            disableRipple
             id={idNamePair._id}
             key={idNamePair._id}
             sx={{ marginTop: '15px', display: 'flex', p: 1 }}
-            style={{ width: '100%', fontSize: '30pt' }}
+            style={{ width: '100%', fontSize: '30pt', margin: '10px', padding: '20px', borderRadius: '25px', backgroundColor:'white'}}
             button
             onClick={(event) => {
-                handleLoadList(event, idNamePair._id)
+                handleLoadList(event, idNamePair._id);
             }}
+            onDoubleClick={(event) => handleToggleEdit(event,  idNamePair._id)}
         >
-            <Box sx={{ p: 1, flexGrow: 1 }}>{idNamePair.name}</Box>
+            <Box sx={{ p: 1, flexGrow: 1 }}>
+                <Box style={{'display': 'flex', 'flexDirection': 'row', 'justifyContent': 'space-between', alignItems: 'center'}}>
+                    <div style={{'display': 'flex', 'flexDirection':'column', 'justifyContent': 'space-between'}}>
+                        <Typography style={{fontSize:'25pt'}}>
+                            {idNamePair.name}
+                        </Typography> 
+                        {isPublished  ? 
+                        <div>
+                            <div style={{display: 'flex', flexDirection: 'column'}} >
+                                <Typography style={{ marginTop:'10px'}}>
+                                        {`By: ${idNamePair.publishedBy}`}
+                                </Typography>
+                                <Typography style={{ marginTop:'10px'}} color='green'>
+                                    {'Published'}
+                                </Typography>
+                            </div>
+                        </div>
+                        : null }
+                    </div>
+
+                    {isPublished ?  
+                    <div style={{display: 'flex',  flexDirection:'column', alignItems: 'center', gap: '10px'}}>
+                         <div style={{display: 'flex', gap: '15px'}}>
+                            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                                <IconButton fullWidth={false} style={{ backgroundColor: 'transparent', }}>
+                                        <ThumbUpOffAltIcon size='large' fullWidth={false} />
+                                </IconButton>
+                                <Typography>{idNamePair.numberOfLikes}</Typography>
+                            </div>
+                            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                                <IconButton fullWidth={false} style={{ backgroundColor: 'transparent', }}>
+                                        <ThumbDownOffAltIcon size='large' fullWidth={false} />
+                                </IconButton>
+                                <Typography>{idNamePair.numberOfLikes}</Typography>
+                            </div>      
+                        </div>
+                        <div>
+                            <Typography>{`Listens:  ${idNamePair.numberOfListens}`}</Typography>
+                        </div>
+                    </div>
+                    : null}
+
+                    <IconButton fullWidth={false} style={{ backgroundColor: 'transparent' }}>
+                        <ExpandMoreIcon size='large' fullWidth={false} />
+                    </IconButton>
+                </Box>
+               
+            </Box>
+
+
+
+
+            {/* 
             <Box sx={{ p: 1 }}>
                 <IconButton onClick={handleToggleEdit} aria-label='edit'>
                     <EditIcon style={{fontSize:'30pt'}} />
@@ -96,8 +160,9 @@ function ListCard(props) {
                     }} aria-label='delete'>
                     <DeleteIcon style={{fontSize:'30pt'}} />
                 </IconButton>
-            </Box>
+            </Box> */}
         </ListItem>
+        
 
     if (editActive) {
         cardElement =
