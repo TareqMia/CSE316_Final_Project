@@ -24,7 +24,8 @@ const playlistSchema = new Schema(
             user: String,
             comment: String 
         }], required: false },
-        publishedBy: { type: String, required: false}
+        publishedBy: { type: String, required: false},
+        publishedOn: { type: Date, required: false }
 
     },
     { timestamps: true },

@@ -24,7 +24,9 @@ function ListCard(props) {
     const [text, setText] = useState("");
     const { idNamePair, selected } = props;
 
-    const isPublished = idNamePair.published;
+    let isPublished = idNamePair.published;
+    let date = new Date(idNamePair.publishedOn);
+    const month = date.toLocaleString('default', { month: 'long' }).substring(0, 3);
 
     function handleLoadList(event, id) {
         console.log("handleLoadList for " + id);
@@ -109,7 +111,7 @@ function ListCard(props) {
                                         {`By: ${idNamePair.publishedBy}`}
                                 </Typography>
                                 <Typography style={{ marginTop:'10px'}} color='green'>
-                                    {'Published'}
+                                    {`Published: ${month} ${date.getDay()}, ${date.getFullYear()}`}
                                 </Typography>
                             </div>
                         </div>
