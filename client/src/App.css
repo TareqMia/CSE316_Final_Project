@@ -18,15 +18,20 @@
 
 body {
   background-color: var(--swatch-foundation);
+  margin:0; 
+	padding:0;
+  
+  /* transform: scale(0.95); */
+ 
 }
 
 #root {
   background-color: var(--swatch-primary);
   font-family: "Lexend Exa";
-  position: absolute;
-  width: 80%;
+  position: relative;
+  width: 80vw;
   left: 10%;
-  height:min-content;
+  height: min-content;
   /* top: 5%;   */
 }
 
@@ -61,9 +66,10 @@ body {
   border-width: 2px;
   border-style: solid;
   border-radius: 10px;
-  /* padding-left: 10%; */
-  /* padding-top: 5%; */
+  padding-left: 5%; 
+  padding-top: 5%;
   padding-bottom: 5%;
+  padding-right: 5%;
   height: 35rem;
   vertical-align: middle;
   justify-content: space-evenly;
@@ -153,10 +159,13 @@ body {
   display: flex;
   flex-direction: column;
   overflow: scroll;
+  margin: 0;
 }
 
 #media-playlist {
   display: flex;
+  flex-direction: row;
+  height: 80vh;
   
 }
 
