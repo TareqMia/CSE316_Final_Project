@@ -18,7 +18,7 @@ export default function YouTubePlayerExample() {
     let currentSong = 0;
 
     const playerOptions = {
-        height: '300',
+        height: '350vh',
         width: '100%',
         playerVars: {
             // https://developers.google.com/youtube/player_parameters
