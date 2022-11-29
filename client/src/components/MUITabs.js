@@ -7,6 +7,8 @@ import Box from '@mui/material/Box';
 
 import YouTube from 'react-youtube';
 import YouTubePlayerExample from './YouTubePlayerExample';
+import PlaylistDescription from './PlaylistDescription';
+import CommentsSection from './CommentsSection';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -49,21 +51,26 @@ export default function MUITabs() {
   };
 
   return (
-    <Box sx={{ width: '50%'}}>
+    <Box sx={{ width: '40vw'}}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" style={{height: "63px"}}>
           <Tab label="YouTube Player" {...a11yProps(0)} />
           <Tab label="Comments" {...a11yProps(1)} />
           
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <div>
+        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', width: '100%'}}>
+           {/* <div style={{display: 'flex', flexDirection: 'column'}}> */}
             <YouTubePlayerExample />
+            <PlaylistDescription />
+            {/* </div> */}
         </div>
       </TabPanel>
-      <TabPanel value={value} index={1}>
-        Item Two
+      <TabPanel value={value} index={1} style={{width: '39vw'}}>
+        <div style={{backgroundColor: 'beige'}}>
+          <CommentsSection />
+        </div>
       </TabPanel>
     </Box>
   );

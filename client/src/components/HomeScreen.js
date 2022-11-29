@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { GlobalStoreContext } from '../store'
 import ListCard from './ListCard.js'
+import MenuBar from './MenuBar';
 import MUIDeleteModal from './MUIDeleteModal'
 
 import AddIcon from '@mui/icons-material/Add';
@@ -41,12 +42,20 @@ const HomeScreen = () => {
     return (
         <div id="playlister-list-selector">
             <div id='media-playlist'>
-                <div id="list-selector-list">
-                    {
-                        listCard
-                    }
+
+                <div style={{width: '50%', display: 'flex', flexDirection: 'column'}}>
+                    <MenuBar />
+                    <div id='list-selector-list'>
+                        {
+                            listCard
+                        }
+                    </div>
                 </div>
-                <MUITabs />
+
+                <div>
+                    <MUITabs />
+                </div>
+                
             </div>
 
             <div id="list-selector-heading">

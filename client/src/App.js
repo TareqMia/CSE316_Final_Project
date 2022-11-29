@@ -1,5 +1,5 @@
 import './App.css';
-import { React } from 'react'
+import { React, useContext } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { AuthContextProvider } from './auth';
 import { GlobalStoreContextProvider } from './store'
@@ -9,8 +9,10 @@ import {
     LoginScreen,
     RegisterScreen,
     Statusbar,
-    WorkspaceScreen
-} from './components'
+    WorkspaceScreen,
+} from './components';
+
+import  MenuBar from './components/MenuBar';
 /*
     This is our application's top-level component.
     
@@ -22,7 +24,7 @@ import {
   
   @author McKilla Gorilla
 */
-const App = () => {   
+const App = () => {  
     return (
         <BrowserRouter>
             <AuthContextProvider>

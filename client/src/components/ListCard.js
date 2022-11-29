@@ -134,7 +134,7 @@ function ListCard(props) {
                                 <Typography>{idNamePair.numberOfLikes}</Typography>
                             </div>      
                         </div>
-                        <div>
+                        <div style={{marginTop: '10px'}}>
                             <Typography>{`Listens:  ${idNamePair.numberOfListens}`}</Typography>
                         </div>
                     </div>
