@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { GlobalStoreContext } from '../store'
 import ListCard from './ListCard.js'
 import MenuBar from './MenuBar';
@@ -17,6 +17,18 @@ import MUITabs from './MUITabs';
 const HomeScreen = () => {
     const { store } = useContext(GlobalStoreContext);
 
+    const [showPlaylist, setShowPlaylist] = useState([]);
+
+    const toggleOpen = (id) => {
+        if (showPlaylist.includes(id)) {
+            setShowPlaylist(showPlaylist.filter(sid => sid != id));
+        } else {
+            showPlaylist.shift();
+            showPlaylist.push(id);
+            setShowPlaylist(showPlaylist);
+        }
+    }
+
     useEffect(() => {
         store.loadIdNamePairs();
     }, []);
@@ -34,6 +46,8 @@ const HomeScreen = () => {
                         key={pair._id}
                         idNamePair={pair}
                         selected={false}
+                        expandPlaylist={showPlaylist}
+                        toggleOpen={toggleOpen}
                     />
                 ))
             }

@@ -11,6 +11,9 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 
+import SongCard from './SongCard';
+import WorkspaceScreen from './WorkspaceScreen';
+
 /*
     This is a card in our list of top 5 lists. It lets select
     a list for editing and it has controls for changing its 
@@ -22,7 +25,7 @@ function ListCard(props) {
     const { store } = useContext(GlobalStoreContext);
     const [editActive, setEditActive] = useState(false);
     const [text, setText] = useState("");
-    const { idNamePair, selected } = props;
+    const { idNamePair, selected, expandPlaylist, toggleOpen } = props;
 
     let isPublished = idNamePair.published;
     let date = new Date(idNamePair.publishedOn);
@@ -140,10 +143,24 @@ function ListCard(props) {
                     </div>
                     : null}
 
-                    <IconButton fullWidth={false} style={{ backgroundColor: 'transparent' }}>
+                    <IconButton fullWidth={false} style={{ backgroundColor: 'transparent' }} onClick={() => toggleOpen(idNamePair._id)}>
                         <ExpandMoreIcon size='large' fullWidth={false} />
                     </IconButton>
+
+
+                    
                 </Box>
+                { expandPlaylist.includes(idNamePair._id) ? 
+                <div>
+                     <WorkspaceScreen />
+                 </div> : null
+                }
+                {/* {
+                    playlistExpanded ? 
+                    <div>
+                        <WorkspaceScreen />
+                    </div> : null
+                } */}
                
             </Box>
 

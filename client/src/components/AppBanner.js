@@ -98,7 +98,8 @@ export default function AppBanner() {
                         component="div"
                         sx={{ display: { xs: 'none', sm: 'block' } }}                        
                     >
-                        <Link style={{ textDecoration: 'none', color: 'white' }} to='/'>⌂</Link>
+                        {/* <Link style={{ textDecoration: 'none', color: 'white' }} to='/'>⌂</Link> */}
+                        <img src='playlister.png' style={{width: '30%'}}/>
                     </Typography>
                     <Box sx={{ flexGrow: 1 }}>{editToolbar}</Box>
                     {auth.loggedIn ? <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
