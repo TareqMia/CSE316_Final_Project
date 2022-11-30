@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { GlobalStoreContext } from '../store'
 import Box from '@mui/material/Box';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -25,7 +25,7 @@ function ListCard(props) {
     const { store } = useContext(GlobalStoreContext);
     const [editActive, setEditActive] = useState(false);
     const [text, setText] = useState("");
-    const { idNamePair, selected, expandPlaylist, toggleOpen } = props;
+    const { idNamePair, selected, expandPlaylist, toggleOpen} = props;
 
     let isPublished = idNamePair.published;
     let date = new Date(idNamePair.publishedOn);
@@ -39,6 +39,10 @@ function ListCard(props) {
                 _id = ("" + _id).substring("list-card-text-".length);
 
             console.log("load " + event.target.id);
+
+            if (store.currentList && idNamePair._id != store.currentList._id ) {
+                toggleOpen(expandPlaylist);
+            }
 
             // CHANGE THE CURRENT LIST
             store.setCurrentList(id);
@@ -143,7 +147,12 @@ function ListCard(props) {
                     </div>
                     : null}
 
-                    <IconButton fullWidth={false} style={{ backgroundColor: 'transparent' }} onClick={() => toggleOpen(idNamePair._id)}>
+                    <IconButton fullWidth={false} style={{ backgroundColor: 'transparent' }} onClick={(event) => {
+
+                        
+                        toggleOpen(idNamePair._id);
+                         
+                    } }>
                         <ExpandMoreIcon size='large' fullWidth={false} />
                     </IconButton>
 
@@ -155,13 +164,6 @@ function ListCard(props) {
                      <WorkspaceScreen />
                  </div> : null
                 }
-                {/* {
-                    playlistExpanded ? 
-                    <div>
-                        <WorkspaceScreen />
-                    </div> : null
-                } */}
-               
             </Box>
 
 

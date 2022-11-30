@@ -27,7 +27,7 @@ const PlaylistDescription = () => {
 
             </div>
 
-            <div style={{display: 'flex', justifyContent: 'center', marginTop: '2rem'}}>
+            <div style={{display: 'flex', justifyContent: 'center', marginTop: '0.5rem'}}>
                 <Box  sx={{border: 1, width: '20rem', height: '5rem', display: 'flex', justifyContent: 'center', borderRadius: '15px'}}>
                     <IconButton size='large'>
                         <FastRewindIcon />

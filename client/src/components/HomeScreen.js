@@ -18,11 +18,32 @@ const HomeScreen = () => {
     const { store } = useContext(GlobalStoreContext);
 
     const [showPlaylist, setShowPlaylist] = useState([]);
+    
+
+    // const loadList = (id) => {
+    //     console.log("handleLoadList for " + id);
+    //     if (!event.target.disabled) {
+    //         let _id = event.target.id;
+    //         if (_id.indexOf('list-card-text-') >= 0)
+    //             _id = ("" + _id).substring("list-card-text-".length);
+
+    //         console.log("load " + event.target.id);
+
+    //         // CHANGE THE CURRENT LIST
+    //         if (store.currentList && id !== store.currentList._id) {
+    //             console.log(expandPlaylist);
+    //         }
+    //         store.setCurrentList(id);
+    //     }
+    // }
+
+   
 
     const toggleOpen = (id) => {
         if (showPlaylist.includes(id)) {
-            setShowPlaylist(showPlaylist.filter(sid => sid != id));
+            setShowPlaylist(showPlaylist.filter(sid => sid !== id));
         } else {
+            console.log(showPlaylist);
             showPlaylist.shift();
             showPlaylist.push(id);
             setShowPlaylist(showPlaylist);
