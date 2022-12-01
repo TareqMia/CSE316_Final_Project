@@ -98,15 +98,18 @@ function ListCard(props) {
             id={idNamePair._id}
             key={idNamePair._id}
             sx={{ marginTop: '15px', display: 'flex', p: 1 }}
-            style={{ width: '100%', fontSize: '30pt', margin: '10px', padding: '20px', borderRadius: '25px', backgroundColor:'white'}}
+            style={{ width: '100%', fontSize: '30pt', margin: '10px', padding: '20px', borderRadius: '25px', backgroundColor:'white', zIndex: '5'}}
             button
-            onClick={(event) => {
-                handleLoadList(event, idNamePair._id);
-            }}
             onDoubleClick={(event) => handleToggleEdit(event,  idNamePair._id)}
         >
             <Box sx={{ p: 1, flexGrow: 1 }}>
-                <Box style={{'display': 'flex', 'flexDirection': 'row', 'justifyContent': 'space-between', alignItems: 'center'}}>
+                <Box style={{'display': 'flex', 'flexDirection': 'row', 'justifyContent': 'space-between', alignItems: 'center'}}
+                    onClick={(event) => {
+                        console.log(expandPlaylist);                
+                        handleLoadList(event, idNamePair._id);   
+                    }}
+                
+                >
                     <div style={{'display': 'flex', 'flexDirection':'column', 'justifyContent': 'space-between'}}>
                         <Typography style={{fontSize:'25pt'}}>
                             {idNamePair.name}
@@ -161,7 +164,7 @@ function ListCard(props) {
                 </Box>
                 { expandPlaylist.includes(idNamePair._id) ? 
                 <div>
-                     <WorkspaceScreen />
+                     <WorkspaceScreen className='workspace' />
                  </div> : null
                 }
             </Box>

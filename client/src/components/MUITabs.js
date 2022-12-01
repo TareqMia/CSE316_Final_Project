@@ -5,8 +5,6 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-import YouTube from 'react-youtube';
-import PlaylistDescription from './PlaylistDescription';
 import CommentsSection from './CommentsSection';
 import YouTubePlayer from './YouTubePlayer';
 

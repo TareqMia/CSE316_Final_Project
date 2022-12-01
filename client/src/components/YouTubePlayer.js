@@ -139,8 +139,8 @@ const YouTubePlayer = () => {
             <div>
                 <PlaylistDescription 
                 song={currentSong}
-                title={currentList ? currentList.songs[index].title : ''}
-                artist={currentList ? currentList.songs[index].artist : ''}
+                title={(currentList && currentList.songs.length > 0) ? currentList.songs[index].title : ''}
+                artist={(currentList && currentList.songs.length > 0) ? currentList.songs[index].artist : ''}
                 index={index}
                 name={currentList ? currentList.name : ''}
                 handlePrevious={handlePrevious}

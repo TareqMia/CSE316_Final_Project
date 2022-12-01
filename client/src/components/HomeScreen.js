@@ -3,12 +3,14 @@ import { GlobalStoreContext } from '../store'
 import ListCard from './ListCard.js'
 import MenuBar from './MenuBar';
 import MUIDeleteModal from './MUIDeleteModal'
+import MUIEditSongModal from './MUIEditSongModal';
 
 import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab'
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography'
 import MUITabs from './MUITabs';
+import MUIRemoveSongModal from './MUIRemoveSongModal';
 /*
     This React component lists all the top5 lists in the UI.
     
@@ -19,26 +21,6 @@ const HomeScreen = () => {
 
     const [showPlaylist, setShowPlaylist] = useState([]);
     
-
-    // const loadList = (id) => {
-    //     console.log("handleLoadList for " + id);
-    //     if (!event.target.disabled) {
-    //         let _id = event.target.id;
-    //         if (_id.indexOf('list-card-text-') >= 0)
-    //             _id = ("" + _id).substring("list-card-text-".length);
-
-    //         console.log("load " + event.target.id);
-
-    //         // CHANGE THE CURRENT LIST
-    //         if (store.currentList && id !== store.currentList._id) {
-    //             console.log(expandPlaylist);
-    //         }
-    //         store.setCurrentList(id);
-    //     }
-    // }
-
-   
-
     const toggleOpen = (id) => {
         if (showPlaylist.includes(id)) {
             setShowPlaylist(showPlaylist.filter(sid => sid !== id));
@@ -48,6 +30,14 @@ const HomeScreen = () => {
             showPlaylist.push(id);
             setShowPlaylist(showPlaylist);
         }
+    }
+
+    let modalJSX = "";
+    if (store.isEditSongModalOpen()) {
+        modalJSX = <MUIEditSongModal />;
+    }
+    else if (store.isRemoveSongModalOpen()) {
+        modalJSX = <MUIRemoveSongModal />;
     }
 
     useEffect(() => {
@@ -64,6 +54,7 @@ const HomeScreen = () => {
             {
                 store.idNamePairs.map((pair) => (
                     <ListCard
+                        style={{zIndex: '900'}}
                         key={pair._id}
                         idNamePair={pair}
                         selected={false}
@@ -90,7 +81,8 @@ const HomeScreen = () => {
                 <div>
                     <MUITabs />
                 </div>
-                
+                <MUIDeleteModal />
+                { modalJSX }
             </div>
 
             <div id="list-selector-heading">
@@ -103,8 +95,7 @@ const HomeScreen = () => {
                         <AddIcon />
                     </Fab>
                     <Typography variant="h3">Your Lists</Typography>
-                </div>
-            <MUIDeleteModal />
+            </div>
         </div>)
 }
 

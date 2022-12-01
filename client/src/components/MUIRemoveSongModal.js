@@ -36,9 +36,13 @@ export default function MUIRemoveSongModal() {
         songTitle = store.currentSong.title;
     }
 
+    console.log('in modal');
+
     return (
         <Modal
-            open={store.currentSong !== null}
+            open={store.currentModal === "REMOVE_SONG"}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
         >
 
             <Box sx={style}>

@@ -16,13 +16,13 @@ function WorkspaceScreen() {
     const { store } = useContext(GlobalStoreContext);
     store.history = useHistory();
     
-    let modalJSX = "";
-    if (store.isEditSongModalOpen()) {
-        modalJSX = <MUIEditSongModal />;
-    }
-    else if (store.isRemoveSongModalOpen()) {
-        modalJSX = <MUIRemoveSongModal />;
-    }
+    // let modalJSX = "";
+    // if (store.isEditSongModalOpen()) {
+    //     modalJSX = <MUIEditSongModal />;
+    // }
+    // else if (store.isRemoveSongModalOpen()) {
+    //     modalJSX = <MUIRemoveSongModal />;
+    // }
 
     if (!store.currentList) {
         return null;
@@ -33,10 +33,12 @@ function WorkspaceScreen() {
         <List 
             id="playlist-cards" 
             sx={{ width: '100%', bgcolor: 'background.paper' }}
-        >
+
+        >   
             {
                 store.currentList.songs.map((song, index) => (
                     <SongCard
+                        style={{zIndex: '10'}}
                         id={'playlist-song-' + (index)}
                         key={'playlist-song-' + (index)}
                         index={index}
@@ -45,7 +47,7 @@ function WorkspaceScreen() {
                 ))  
             }
          </List>                     
-         { modalJSX }
+         
          </Box>
     )
 }
