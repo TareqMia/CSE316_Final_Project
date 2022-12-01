@@ -6,9 +6,9 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 import YouTube from 'react-youtube';
-import YouTubePlayerExample from './YouTubePlayerExample';
 import PlaylistDescription from './PlaylistDescription';
 import CommentsSection from './CommentsSection';
+import YouTubePlayer from './YouTubePlayer';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -62,8 +62,9 @@ export default function MUITabs() {
       <TabPanel value={value} index={0}>
         <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', width: '100%'}}>
            {/* <div style={{display: 'flex', flexDirection: 'column'}}> */}
-            <YouTubePlayerExample />
-            <PlaylistDescription />
+            {/* <YouTubePlayerExample /> */}
+            <YouTubePlayer />
+            {/* <PlaylistDescription /> */}
             {/* </div> */}
         </div>
       </TabPanel>
