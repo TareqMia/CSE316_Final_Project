@@ -22,7 +22,7 @@ const PlaylistDescription = (props) => {
 
             <div>
                 <Typography>Playlist: {name} </Typography>
-                <Typography>Song #:  {index + 1}</Typography>
+                <Typography>Song #:  {title !== '' ? index + 1 : ''}</Typography>
                 <Typography>Title: {title}</Typography>
                 <Typography>Artist: {artist} </Typography>
 

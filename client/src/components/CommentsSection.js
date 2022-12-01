@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Box, TextField, List } from '@mui/material';
 import Comment from './Comment';
 
@@ -9,6 +9,7 @@ import { GlobalStoreContext } from '../store';
 const CommentsSection = () => {
 
     const { store } = useContext(GlobalStoreContext);
+    const [text, setText] = useState('');
 
     let currentList = store.currentList ? store.currentList : null;
  
@@ -20,6 +21,18 @@ const CommentsSection = () => {
             return <Comment userName={comment.user} comment={comment.comment}/>
         })
     }
+
+    const handleKeyPress = (event) => {
+        if (event.code === "Enter") {
+            store.addNewComment(text);
+        }
+        
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        setText('');
+    } 
 
     return( 
     
@@ -33,8 +46,10 @@ const CommentsSection = () => {
                     </List> 
                 </div>
                
+                <form onSubmit={handleSubmit}>
+                    <TextField onKeyPress={handleKeyPress} onChange={(event) => setText(event.target.value)} style={{width: '100%'}} label='Add Comment' variant='filled'/>
+                </form>
                 
-                <TextField style={{width: '100%'}} label='Add Comment' variant='filled'/>
             </Box>
 
 

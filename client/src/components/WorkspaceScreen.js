@@ -27,7 +27,7 @@ function WorkspaceScreen() {
     if (!store.currentList) {
         return null;
     }
-
+    
     return (
         <Box>
         <List 

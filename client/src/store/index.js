@@ -381,6 +381,7 @@ function GlobalStoreContextProvider(props) {
             }
         }
         asyncSetCurrentList(id);
+        tps.clearAllTransactions();
     }
 
     store.getPlaylistSize = function() {
@@ -484,6 +485,7 @@ function GlobalStoreContextProvider(props) {
         async function asyncUpdateCurrentList() {
             const response = await api.updatePlaylistById(store.currentList._id, store.currentList);
             if (response.data.success) {
+                console.log(response.data);
                 storeReducer({
                     type: GlobalStoreActionType.SET_CURRENT_LIST,
                     payload: store.currentList
@@ -517,6 +519,20 @@ function GlobalStoreContextProvider(props) {
             type: GlobalStoreActionType.SET_LIST_NAME_EDIT_ACTIVE,
             payload: null
         });
+    }
+
+    store.addNewComment = (text) => {
+        let comment = {
+            user: `${auth.user.firstName} ${auth.user.lastName}`,
+            comment: text
+        }
+        console.log(store.currentList);
+        let currentList = store.currentList;
+        if (currentList.published) {
+            currentList.comments.push(comment);
+            console.log(currentList.comments);
+            store.updateCurrentList();
+        }
     }
 
     return (
