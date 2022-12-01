@@ -53,7 +53,7 @@ function SongCard(props) {
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
             draggable="true"
-            onDoubleClick={handleEditSong}
+            // onDoubleClick={handleEditSong}
             style={{display: 'flex', justifyContent: 'space-between'}}
         >
             <div>
@@ -67,16 +67,27 @@ function SongCard(props) {
             </a>
 
             </div>
-           
-            <input
-               
-                type="button"
-                id={"remove-song-" + index}
-                className="list-card-button"
-                // value={"\u2715"}
-                value={'x'}
-                onClick={handleRemoveSong}
-            />
+
+            <div style={{display: 'flex', flexDirection: 'row'}}>
+                <input
+                    type='button'
+                    id={"edit-song-" + index}
+                    className="list-card-button"
+                    value={'✎'}
+                    onClick={handleEditSong}
+                
+                />
+            
+                <input
+
+                    type="button"
+                    id={"remove-song-" + index}
+                    className="list-card-button"
+                    // value={"\u2715"}
+                    value={'x'}
+                    onClick={handleRemoveSong}
+                />
+            </div>
         </div>
     );
 }
