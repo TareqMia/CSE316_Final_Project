@@ -3,12 +3,14 @@ import { Box, TextField, List } from '@mui/material';
 import Comment from './Comment';
 
 import { GlobalStoreContext } from '../store';
+import AuthContext from '../auth';
 
 
 
 const CommentsSection = () => {
 
     const { store } = useContext(GlobalStoreContext);
+    const { auth } = useContext(AuthContext);
     const [text, setText] = useState('');
 
     let currentList = store.currentList ? store.currentList : null;
@@ -52,7 +54,7 @@ const CommentsSection = () => {
                 </div>
                
                 <form onSubmit={handleSubmit}>
-                    <TextField value={text} onKeyPress={handleKeyPress} onChange={(event) => setText(event.target.value)} style={{width: '100%'}} label='Add Comment' variant='filled'/>
+                    <TextField disabled={!store.currentList.published || !auth.loggedIn} value={text} onKeyPress={handleKeyPress} onChange={(event) => setText(event.target.value)} style={{width: '100%'}} label='Add Comment' variant='filled'/>
                 </form>
                 
             </Box>

@@ -40,7 +40,7 @@ function ListCard(props) {
 
             console.log("load " + event.target.id);
 
-            if (store.currentList && idNamePair._id != store.currentList._id ) {
+            if (store.currentList && idNamePair._id != store.currentList._id) {
                 toggleOpen(expandPlaylist);
             }
 
@@ -66,12 +66,12 @@ function ListCard(props) {
         setEditActive(newActive);
     }
 
-    async function handleDeleteList(event) {
-        event.stopPropagation();
-        let _id = event.target.id;
-        _id = ("" + _id).substring("delete-list-".length);
-        store.markListForDeletion(_id);
-    }
+    // async function handleDeleteList(event) {
+    //     event.stopPropagation();
+    //     let _id = event.target.id;
+    //     _id = ("" + _id).substring("delete-list-".length);
+    //     store.markListForDeletion(_id);
+    // }
 
     function handleKeyPress(event) {
         if (event.code === "Enter") {
