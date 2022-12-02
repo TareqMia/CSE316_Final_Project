@@ -68,7 +68,9 @@ function SongCard(props) {
 
             </div>
 
-            <div style={{display: 'flex', flexDirection: 'row'}}>
+             {!store.currentList.published ? 
+             
+             <div style={{display: 'flex', flexDirection: 'row'}}>
                 <input
                     type='button'
                     id={"edit-song-" + index}
@@ -87,7 +89,7 @@ function SongCard(props) {
                     value={'x'}
                     onClick={handleRemoveSong}
                 />
-            </div>
+            </div> : null }
         </div>
     );
 }

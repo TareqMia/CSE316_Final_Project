@@ -25,13 +25,18 @@ const CommentsSection = () => {
     const handleKeyPress = (event) => {
         if (event.code === "Enter") {
             store.addNewComment(text);
+            setText('');
         }
         
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        setText('');
+
+        if (event.code === "Enter") {
+            setText('');
+        }
+       
     } 
 
     return( 
@@ -47,7 +52,7 @@ const CommentsSection = () => {
                 </div>
                
                 <form onSubmit={handleSubmit}>
-                    <TextField onKeyPress={handleKeyPress} onChange={(event) => setText(event.target.value)} style={{width: '100%'}} label='Add Comment' variant='filled'/>
+                    <TextField value={text} onKeyPress={handleKeyPress} onChange={(event) => setText(event.target.value)} style={{width: '100%'}} label='Add Comment' variant='filled'/>
                 </form>
                 
             </Box>

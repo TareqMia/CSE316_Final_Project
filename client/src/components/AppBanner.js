@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import AuthContext from '../auth';
 import { GlobalStoreContext } from '../store'
 
-import EditToolbar from './EditToolbar'
+// import EditToolbar from './EditToolbar'
 
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import AppBar from '@mui/material/AppBar';
@@ -73,11 +73,11 @@ export default function AppBanner() {
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>        
 
-    let editToolbar = "";
-    let menu = auth.loggedIn ? loggedInMenu : loggedOutMenu;
-    if (store.currentList && !store.currentList.published) {
-        editToolbar = <EditToolbar />;
-    }
+    // let editToolbar = "";
+    // let menu = auth.loggedIn ? loggedInMenu : loggedOutMenu;
+    // if (store.currentList && !store.currentList.published) {
+    //     editToolbar = <EditToolbar />;
+    // }
     
     function getAccountMenu(loggedIn) {
         let userInitials = auth.getUserInitials();
@@ -101,7 +101,7 @@ export default function AppBanner() {
                         {/* <Link style={{ textDecoration: 'none', color: 'white' }} to='/'>⌂</Link> */}
                         <img src='playlister.png' style={{width: '30%'}}/>
                     </Typography>
-                    <Box sx={{ flexGrow: 1 }}>{editToolbar}</Box>
+                    <Box sx={{ flexGrow: 1 }}></Box>
                     {auth.loggedIn ? <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                         <IconButton
                             size="large"
@@ -119,7 +119,7 @@ export default function AppBanner() {
                 </Toolbar>
             </AppBar>
             {
-                menu
+                loggedInMenu
             }
         </Box>
     );

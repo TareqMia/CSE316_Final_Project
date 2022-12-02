@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { GlobalStoreContext } from '../store'
+import { GlobalStoreContext} from '../store'
+import AuthContext from '../auth';
 import ListCard from './ListCard.js'
 import MenuBar from './MenuBar';
 import MUIDeleteModal from './MUIDeleteModal'
@@ -11,6 +12,7 @@ import List from '@mui/material/List';
 import Typography from '@mui/material/Typography'
 import MUITabs from './MUITabs';
 import MUIRemoveSongModal from './MUIRemoveSongModal';
+import EditToolbar from './EditToolbar';
 /*
     This React component lists all the top5 lists in the UI.
     
@@ -18,6 +20,7 @@ import MUIRemoveSongModal from './MUIRemoveSongModal';
 */
 const HomeScreen = () => {
     const { store } = useContext(GlobalStoreContext);
+    const { auth } = useContext(AuthContext);
 
     const [showPlaylist, setShowPlaylist] = useState([]);
     
