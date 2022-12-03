@@ -173,7 +173,9 @@ updatePlaylist = async (req, res) => {
     }
 
     Playlist.findOne({ _id: req.params.id }, (err, playlist) => {
-        console.log("playlist found: " + JSON.stringify(playlist));
+        //console.log("playlist found: " + JSON.stringify(playlist));
+        console.log('==========');
+        console.log(playlist.numberOfLikes);
         if (err) {
             return res.status(404).json({
                 err,
@@ -193,6 +195,9 @@ updatePlaylist = async (req, res) => {
                     list.name = body.playlist.name;
                     list.songs = body.playlist.songs;
                     list.comments = body.playlist.comments;
+                    list.numberOfLikes = body.playlist.numberOfLikes;
+                    list.numberOfDislikes = body.playlist.numberOfDislikes;
+                    list.published = body.playlist.published;
                     list
                         .save()
                         .then(() => {

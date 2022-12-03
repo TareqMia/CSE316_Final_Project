@@ -262,7 +262,7 @@ function GlobalStoreContextProvider(props) {
     // THIS FUNCTION CREATES A NEW LIST
     store.createNewList = async function () {
         let newListName = "Untitled" + store.newListCounter;
-        const response = await api.createPlaylist(newListName, [], auth.user.email, false, 0, 0, 0, [], 
+        const response = await api.createPlaylist(newListName, [], auth.user.email, false, [], [], 0, [], 
             (auth.user.firstName + ' ' + auth.user.lastName), new Date());
         console.log("createNewList response: " + response);
         if (response.status === 201) {
@@ -531,6 +531,44 @@ function GlobalStoreContextProvider(props) {
             console.log(currentList.comments);
             store.updateCurrentList();
         }
+    }
+
+    store.handleLike = () => {
+        // check if user already liked
+        let currentList = store.currentList;
+        let email = auth.user.email;
+
+        if (!currentList.numberOfLikes.includes(email)){
+            currentList.numberOfLikes.push(email);
+            store.updateCurrentList();
+        }
+        console.log("UPDATED")
+        console.log(store.currentList);
+       
+        return currentList.numberOfLikes.length;
+    }
+
+    store.handleDislike = () => {
+        // check if user already liked
+        let currentList = store.currentList;
+        let email = auth.user.email;
+
+        if (!currentList.numberOfDislikes.includes(email)){
+            currentList.numberOfDislikes.push(email);
+            store.updateCurrentList();
+        }
+        console.log("UPDATED")
+        console.log(store.currentList);
+       
+        return currentList.numberOfDislikes.length;
+    }
+
+    store.publishPlaylist = () => {
+        store.currentList.published = true;
+        store.currentList.publishedOn = new Date();
+
+        store.updateCurrentList();
+        // store.loadIdNamePairs();
     }
 
     return (

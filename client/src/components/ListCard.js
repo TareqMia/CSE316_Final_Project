@@ -10,9 +10,12 @@ import { Accordion, AccordionDetails, AccordionSummary, Button, Typography } fro
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 
 import SongCard from './SongCard';
 import WorkspaceScreen from './WorkspaceScreen';
+import AuthContext from '../auth';
 
 /*
     This is a card in our list of top 5 lists. It lets select
@@ -23,11 +26,17 @@ import WorkspaceScreen from './WorkspaceScreen';
 */
 function ListCard(props) {
     const { store } = useContext(GlobalStoreContext);
+    const { auth } = useContext(AuthContext);
     const [editActive, setEditActive] = useState(false);
     const [text, setText] = useState("");
     const { idNamePair, selected, expandPlaylist, toggleOpen} = props;
+    const [likes, setLikes] = useState(idNamePair.numberOfLikes.length);
+    const [dislikes, setDislikes] = useState(idNamePair.numberOfDislikes.length);
+    const [liked, setLiked] = useState(idNamePair.numberOfLikes.includes(auth.user.email));
+    const [disliked, setDisliked] = useState(idNamePair.numberOfDislikes.includes(auth.user.email));
+    const [published, setPublished] = useState(idNamePair.published);
 
-    let isPublished = idNamePair.published;
+
     let date = new Date(idNamePair.publishedOn);
     const month = date.toLocaleString('default', { month: 'long' }).substring(0, 3);
 
@@ -66,13 +75,6 @@ function ListCard(props) {
         setEditActive(newActive);
     }
 
-    // async function handleDeleteList(event) {
-    //     event.stopPropagation();
-    //     let _id = event.target.id;
-    //     _id = ("" + _id).substring("delete-list-".length);
-    //     store.markListForDeletion(_id);
-    // }
-
     function handleKeyPress(event) {
         if (event.code === "Enter") {
             let id = event.target.id.substring("list-".length);
@@ -92,56 +94,98 @@ function ListCard(props) {
     if (store.isListNameEditActive) {
         cardStatus = true;
     }
+
+    const handleLikePlaylist = () => {
+        let newLikes = store.handleLike();
+
+        if (!idNamePair.numberOfLikes.includes(auth.user.email)) {
+            setLiked(true);
+        }
+        setLikes(newLikes);
+    }
+
+    const handleDislikePlaylist = () => {
+        let newDislikes = store.handleDislike();
+        
+        if (!idNamePair.numberOfDislikes.includes(auth.user.email)) {
+            setDisliked(true);
+        }
+        setDislikes(newDislikes);
+    }
+
+    let playlistLiked = liked ? 
+        <ThumbUpIcon size='large' fullWidth={false} /> : <ThumbUpOffAltIcon size='large' fullWidth={false} />;
+    
+    let playlistDisliked = disliked ? 
+        <ThumbDownIcon size='large' fullWidth={false} /> : <ThumbDownOffAltIcon size='large' fullWidth={false} />;
+
+    let color =  selected ? '#c1c3c7' : 'white';
+
     let cardElement = 
         <ListItem
             disableRipple
+            className={selectClass}
             id={idNamePair._id}
             key={idNamePair._id}
             sx={{ marginTop: '15px', display: 'flex', p: 1 }}
-            style={{ width: '100%', fontSize: '30pt', margin: '10px', padding: '20px', borderRadius: '25px', backgroundColor:'white', zIndex: '5'}}
+            style={{
+                width: '100%', 
+                fontSize: '30pt', 
+                margin: '10px', 
+                padding: '20px', 
+                borderRadius: '25px',
+                backgroundColor:'white', 
+                zIndex: '5',
+                backgroundColor: `${color}`
+            }}
             button
             onDoubleClick={(event) => handleToggleEdit(event,  idNamePair._id)}
         >
-            <Box sx={{ p: 1, flexGrow: 1 }}>
+            <Box sx={{ p: 1, flexGrow: 1, borderRadius: '25px'}} style={{backgroundColor:`${color}`}}>
                 <Box style={{'display': 'flex', 'flexDirection': 'row', 'justifyContent': 'space-between', alignItems: 'center'}}
-                    onClick={(event) => {
-                        console.log(expandPlaylist);                
-                        handleLoadList(event, idNamePair._id);   
-                    }}
-                
+                onClick={(event) => {   
+                        handleLoadList(event, idNamePair._id);
+                }}
                 >
-                    <div style={{'display': 'flex', 'flexDirection':'column', 'justifyContent': 'space-between'}}>
-                        <Typography style={{fontSize:'25pt'}}>
+                    <div style={{'display': 'flex', 'flexDirection':'column', 'justifyContent': 'space-between'}}
+                    
+                    >
+                        <Typography style={{fontSize:'25pt'}}
+                        >
                             {idNamePair.name}
                         </Typography> 
-                        {isPublished  ? 
+                        {published  ? 
                         <div>
                             <div style={{display: 'flex', flexDirection: 'column'}} >
                                 <Typography style={{ marginTop:'10px'}}>
                                         {`By: ${idNamePair.publishedBy}`}
                                 </Typography>
                                 <Typography style={{ marginTop:'10px'}} color='green'>
-                                    {`Published: ${month} ${date.getDay()}, ${date.getFullYear()}`}
+                                    {`Published: ${month} ${date.getDay() - 3}, ${date.getFullYear()}`}
                                 </Typography>
                             </div>
                         </div>
                         : null }
                     </div>
 
-                    {isPublished ?  
+                    {published ?  
                     <div style={{display: 'flex',  flexDirection:'column', alignItems: 'center', gap: '10px'}}>
                          <div style={{display: 'flex', gap: '15px'}}>
                             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                                <IconButton fullWidth={false} style={{ backgroundColor: 'transparent', }}>
-                                        <ThumbUpOffAltIcon size='large' fullWidth={false} />
+                                <IconButton fullWidth={false} style={{ backgroundColor: 'transparent', }}
+                                onClick={handleLikePlaylist}
+                                >
+                                        { playlistLiked }
                                 </IconButton>
-                                <Typography>{idNamePair.numberOfLikes}</Typography>
+                                <Typography>{likes}</Typography>
                             </div>
                             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                                <IconButton fullWidth={false} style={{ backgroundColor: 'transparent', }}>
-                                        <ThumbDownOffAltIcon size='large' fullWidth={false} />
+                                <IconButton fullWidth={false} style={{ backgroundColor: 'transparent', }}
+                                onClick={handleDislikePlaylist}
+                                >
+                                        { playlistDisliked }
                                 </IconButton>
-                                <Typography>{idNamePair.numberOfLikes}</Typography>
+                                <Typography>{dislikes}</Typography>
                             </div>      
                         </div>
                         <div style={{marginTop: '10px'}}>
@@ -164,27 +208,10 @@ function ListCard(props) {
                 </Box>
                 { expandPlaylist.includes(idNamePair._id) ? 
                 <div>
-                     <WorkspaceScreen className='workspace' />
+                     <WorkspaceScreen setPublished={setPublished} className='workspace' />
                  </div> : null
                 }
             </Box>
-
-
-
-
-            {/* 
-            <Box sx={{ p: 1 }}>
-                <IconButton onClick={handleToggleEdit} aria-label='edit'>
-                    <EditIcon style={{fontSize:'30pt'}} />
-                </IconButton>
-            </Box>
-            <Box sx={{ p: 1 }}>
-                <IconButton onClick={(event) => {
-                        handleDeleteList(event, idNamePair._id)
-                    }} aria-label='delete'>
-                    <DeleteIcon style={{fontSize:'30pt'}} />
-                </IconButton>
-            </Box> */}
         </ListItem>
         
 

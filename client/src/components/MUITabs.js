@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 
 import CommentsSection from './CommentsSection';
 import YouTubePlayer from './YouTubePlayer';
+import GlobalStoreContext from '../store';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -43,6 +44,7 @@ function a11yProps(index) {
 
 export default function MUITabs() {
   const [value, setValue] = React.useState(0);
+  const { store } = useContext(GlobalStoreContext);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -68,7 +70,7 @@ export default function MUITabs() {
       </TabPanel>
       <TabPanel value={value} index={1} style={{width: '39vw'}}>
         <div style={{backgroundColor: 'beige'}}>
-          <CommentsSection />
+          {store.currentList ? <CommentsSection /> : null}
         </div>
       </TabPanel>
     </Box>

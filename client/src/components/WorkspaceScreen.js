@@ -9,16 +9,23 @@ import List from '@mui/material/List';
 import { GlobalStoreContext } from '../store/index.js'
 import AuthContext from '../auth';
 import EditToolbar from './EditToolbar.js';
+
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
+import PublishIcon from '@mui/icons-material/Publish';
 /*
     This React component lets us edit a loaded list, which only
     happens when we are on the proper route.
     
     @author McKilla Gorilla
 */
-function WorkspaceScreen() {
+function WorkspaceScreen(props) {
     const { store } = useContext(GlobalStoreContext);
     const { auth } = useContext(AuthContext);
-    store.history = useHistory();
+    const { setPublished } = props;
+    store.history = useHistory();  
+
 
 
     const handleDeleteList = async (event, id) => {
@@ -36,6 +43,13 @@ function WorkspaceScreen() {
 
     if (!store.currentList) {
         return null;
+    }
+
+    const handlePublish = () => {
+        if (auth.loggedIn) {
+            store.publishPlaylist();
+            setPublished(true);
+        }
     }
     
     return (
@@ -57,10 +71,30 @@ function WorkspaceScreen() {
                 ))  
             }
          </List>
-         <div>
-            { editToolbar }
-            <Button variant='outlined' onClick={(event) => handleDeleteList(event, store.currentList._id)}>Delete</Button>
-            <Button variant='outlined'>Duplicate</Button>
+         <div style={{display: 'flex', flexDirection: 'row'}}>
+            
+                <IconButton style={{display: 'flex', flexDirection: 'column'}}>
+                    <DeleteIcon style={{height: '30px'}} onClick={(event) => handleDeleteList(event, store.currentList._id)} />
+                    <div style={{fontSize: '10px'}}>Delete</div>   
+                </IconButton>
+
+                <IconButton style={{display: 'flex', flexDirection: 'column', gap: '5px'}}>
+                    <FileCopyIcon />
+                    <div style={{fontSize: '10px'}}>Duplicate</div> 
+                </IconButton>
+                
+                {!store.currentList.published ? 
+                
+                <IconButton style={{display: 'flex', flexDirection: 'column', gap: '5px'}}
+                onClick={handlePublish}
+                >
+                    <PublishIcon />
+                    <div style={{fontSize: '10px'}}>Publish</div> 
+                </IconButton> : null }
+                <Box style={{width: '20%'}}></Box>
+                { editToolbar }
+         
+            
         </div>                     
          
          </Box>

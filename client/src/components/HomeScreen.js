@@ -60,7 +60,7 @@ const HomeScreen = () => {
                         style={{zIndex: '900'}}
                         key={pair._id}
                         idNamePair={pair}
-                        selected={false}
+                        selected={store.currentList && store.currentList._id === pair._id}
                         expandPlaylist={showPlaylist}
                         toggleOpen={toggleOpen}
                     />
