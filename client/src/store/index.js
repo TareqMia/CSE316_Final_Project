@@ -43,6 +43,14 @@ const CurrentModal = {
     REMOVE_SONG : "REMOVE_SONG"
 }
 
+const sortType = {
+    NAME: 'name',
+    DATE: 'date',
+    LIKES: 'likes',
+    DISLIKES: 'dislikes',
+    LISTENS: 'listens'
+}
+
 // WITH THIS WE'RE MAKING OUR GLOBAL DATA STORE
 // AVAILABLE TO THE REST OF THE APPLICATION
 function GlobalStoreContextProvider(props) {
@@ -59,6 +67,7 @@ function GlobalStoreContextProvider(props) {
         listMarkedForDeletion: null
     });
     const history = useHistory();
+    const [counter, setCounter] = useState(0);
 
     console.log("inside useGlobalStore");
 
@@ -70,7 +79,7 @@ function GlobalStoreContextProvider(props) {
     // HANDLE EVERY TYPE OF STATE CHANGE
     const storeReducer = (action) => {
         const { type, payload } = action;
-        switch (type) {
+    switch (type) {
             // LIST UPDATE OF ITS NAME
             case GlobalStoreActionType.CHANGE_LIST_NAME: {
                 return setStore({
@@ -261,9 +270,12 @@ function GlobalStoreContextProvider(props) {
 
     // THIS FUNCTION CREATES A NEW LIST
     store.createNewList = async function () {
-        let newListName = "Untitled" + store.newListCounter;
+        let newListName = "Untitled" + counter;
+        setCounter(counter + 1);
+        console.log("=============");
+        console.log(store.newListCounter);
         const response = await api.createPlaylist(newListName, [], auth.user.email, false, [], [], 0, [], 
-            (auth.user.firstName + ' ' + auth.user.lastName), new Date());
+            auth.user.userName, new Date());
         console.log("createNewList response: " + response);
         if (response.status === 201) {
             tps.clearAllTransactions();
@@ -521,7 +533,7 @@ function GlobalStoreContextProvider(props) {
 
     store.addNewComment = (text) => {
         let comment = {
-            user: `${auth.user.firstName} ${auth.user.lastName}`,
+            user: auth.user.userName,
             comment: text
         }
         console.log(store.currentList);
@@ -569,6 +581,74 @@ function GlobalStoreContextProvider(props) {
 
         store.updateCurrentList();
         // store.loadIdNamePairs();
+    }
+
+    store.setSongIndex = (index) => {
+        store.currentSongIndex = index;
+    }
+
+    store.sortLists = (type) => {
+        switch (type) {
+            case sortType.NAME: {
+                let sorted = store.idNamePairs.sort((a, b) => {
+                    return ('' + a.name).localeCompare(b.name);
+                });
+                storeReducer({
+                    type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+                    payload: sorted
+                });  
+                break;
+            }
+
+            case sortType.DATE: {
+                let sorted = store.idNamePairs.sort((a,b) => {
+                    return new Date(b.publishedOn) - new Date(a.publishedOn);
+                });
+                console.log(sorted);
+                storeReducer({
+                    type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+                    payload: sorted
+                });  
+            }
+
+            case sortType.LISTENS: {
+                let sorted = store.idNamePairs.sort((a,b) => {
+                    return b.numberOfListens - a.numberOfListens;
+                });
+                console.log(sorted);
+                storeReducer({
+                    type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+                    payload: sorted
+                });  
+            }
+
+            case sortType.LIKES: {
+                let sorted = store.idNamePairs.sort((a,b) => {
+                    return b.numberOfLikes - a.numberOfLikes;
+                });
+                console.log(sorted);
+                storeReducer({
+                    type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+                    payload: sorted
+                });  
+            }
+
+            case sortType.DISLIKES: {
+                let sorted = store.idNamePairs.sort((a,b) => {
+                    return b.numberOfDislikes - a.numberOfDislikes;
+                });
+                console.log(sorted);
+                storeReducer({
+                    type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+                    payload: sorted
+                });  
+            }
+
+
+            
+        }
+        
+        
     }
 
     return (

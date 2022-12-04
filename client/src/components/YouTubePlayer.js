@@ -3,14 +3,14 @@ import YouTube from 'react-youtube';
 import { GlobalStoreContext } from '../store';
 import PlaylistDescription from './PlaylistDescription';
 
-const YouTubePlayer = () => {
+const YouTubePlayer = (props) => {
     const { store } = useContext(GlobalStoreContext);
 
     let currentList = store ? store.currentList : [];
     
     let playlist = currentList ? currentList.songs.map(song => song.youTubeId) : [];
-    
     let currentSongIndex = 0;
+    
 
     const [currentSong, setCurrentSong] = useState(currentList ? currentList.songs[0] : null);
     const [title, setTitle] = useState('');
@@ -50,7 +50,6 @@ const YouTubePlayer = () => {
         console.log(iFrame);
         loadAndPlayCurrentSong(event.target);
         event.target.playVideo();
-        
     }
 
     // THIS IS OUR EVENT HANDLER FOR WHEN THE YOUTUBE PLAYER'S STATE
@@ -125,6 +124,8 @@ const YouTubePlayer = () => {
         loadAndPlayCurrentSong(iFrame);
     }
 
+    
+
     return (
         <div>
             <div>
@@ -133,14 +134,15 @@ const YouTubePlayer = () => {
             opts={playerOptions}
             onReady={onPlayerReady}
             onStateChange={onPlayerStateChange} 
+            
             />
             </div>
 
             <div>
                 <PlaylistDescription 
                 song={currentSong}
-                title={(currentList && currentList.songs.length > 0) ? currentList.songs[index].title : ''}
-                artist={(currentList && currentList.songs.length > 0) ? currentList.songs[index].artist : ''}
+                title={(currentList && currentList.songs.length > 0) ? currentList.songs[currentSongIndex].title : ''}
+                artist={(currentList && currentList.songs.length > 0) ? currentList.songs[currentSongIndex].artist : ''}
                 index={index}
                 name={currentList ? currentList.name : ''}
                 handlePrevious={handlePrevious}

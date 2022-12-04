@@ -70,9 +70,10 @@ function AuthContextProvider(props) {
 
     auth.getLoggedIn = async function () {
         const response = await api.getLoggedIn();
+        console.log(response.data.user);
         if (response.status === 200) {
             authReducer({
-                type: AuthActionType.SET_LOGGED_IN,
+                type: AuthActionType.GET_LOGGED_IN,
                 payload: {
                     loggedIn: response.data.loggedIn,
                     user: response.data.user
@@ -81,9 +82,9 @@ function AuthContextProvider(props) {
         }
     }
 
-    auth.registerUser = async function(firstName, lastName, email, password, passwordVerify) {
+    auth.registerUser = async function(firstName, lastName, email, password, passwordVerify, userName) {
         try {
-            const response = await api.registerUser(firstName, lastName, email, password, passwordVerify);
+            const response = await api.registerUser(firstName, lastName, email, password, passwordVerify, userName);
             if (response.status === 200) {
                 authReducer({
                     type: AuthActionType.REGISTER_USER,
@@ -104,6 +105,7 @@ function AuthContextProvider(props) {
     auth.loginUser = async function(email, password) {
         try {
             const response = await api.loginUser(email, password);
+            console.log(response);
             if (response.status === 200) {
                 authReducer({
                     type: AuthActionType.LOGIN_USER,

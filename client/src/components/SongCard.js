@@ -41,19 +41,23 @@ function SongCard(props) {
         store.showEditSongModal(index, song);
     }
 
+    const handleSelectSong = (event) => {
+        store.setSongIndex(index);
+    }
+
     let cardClass = "list-card unselected-list-card";
     return (
         <div
             key={index}
             id={'song-' + index + '-card'}
             className={cardClass}
+            onClick={handleSelectSong}
             onDragStart={handleDragStart}
             onDragOver={handleDragOver}
             onDragEnter={handleDragEnter}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
             draggable="true"
-            // onDoubleClick={handleEditSong}
             style={{display: 'flex', justifyContent: 'space-between'}}
         >
             <div>

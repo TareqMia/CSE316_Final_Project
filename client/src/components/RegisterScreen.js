@@ -20,12 +20,14 @@ export default function RegisterScreen() {
     const handleSubmit = (event) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
+        console.log(formData.get('userName'));
         auth.registerUser(
             formData.get('firstName'),
             formData.get('lastName'),
             formData.get('email'),
             formData.get('password'),
-            formData.get('passwordVerify')
+            formData.get('passwordVerify'),
+            formData.get('userName')
         );
     };
 
@@ -47,6 +49,17 @@ export default function RegisterScreen() {
                         Sign up
                     </Typography>
                     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                    <Grid item xs={12} sm={6} paddingBottom={1}>
+                                <TextField
+                                    autoComplete="uname"
+                                    name="userName"
+                                    required
+                                    fullWidth
+                                    id="userName"
+                                    label="User Name"
+                                    autoFocus
+                                />
+                            </Grid>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
                                 <TextField

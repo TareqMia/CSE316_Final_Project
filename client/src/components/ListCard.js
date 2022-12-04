@@ -37,8 +37,7 @@ function ListCard(props) {
     const [published, setPublished] = useState(idNamePair.published);
 
 
-    let date = new Date(idNamePair.publishedOn);
-    const month = date.toLocaleString('default', { month: 'long' }).substring(0, 3);
+    let date = new Date(idNamePair.publishedOn).toDateString();
 
     function handleLoadList(event, id) {
         console.log("handleLoadList for " + id);
@@ -161,7 +160,7 @@ function ListCard(props) {
                                         {`By: ${idNamePair.publishedBy}`}
                                 </Typography>
                                 <Typography style={{ marginTop:'10px'}} color='green'>
-                                    {`Published: ${month} ${date.getDay() - 3}, ${date.getFullYear()}`}
+                                    {`Published: ${date}`}
                                 </Typography>
                             </div>
                         </div>
@@ -207,7 +206,7 @@ function ListCard(props) {
                     
                 </Box>
                 { expandPlaylist.includes(idNamePair._id) ? 
-                <div>
+                <div >
                      <WorkspaceScreen setPublished={setPublished} className='workspace' />
                  </div> : null
                 }
