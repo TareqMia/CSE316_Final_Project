@@ -17,6 +17,10 @@ import PersonIcon from '@mui/icons-material/Person';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import GlobalStoreContext from '../store';
 
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -86,6 +90,50 @@ export default function MenuBar() {
     handleMenuClose()
   }
 
+  const handleAllUsersClicked = (event) => {
+    store.loadAllPlaylists();
+  }
+
+  const handleHomeClicked = (event) => {
+    store.loadOwnedPlaylists();
+  }
+
+  const handleUserClicked = (event) => {
+    store.loadUserPlaylists()
+  }
+
+  const homeButton = store.screen === 'HOME' ? 
+          <IconButton size="large" edge="start" color="inherit" aria-label="open drawer" sx={{ mr: 2 }}>
+                <HomeIcon onClick={handleHomeClicked} />
+          </IconButton> 
+              :
+          <IconButton size="large" edge="start" color="inherit" aria-label="open drawer" sx={{ mr: 2 }}>
+                <HomeOutlinedIcon onClick={handleHomeClicked} />
+          </IconButton>;
+          
+  const allUsersButton = store.screen === 'ALL_PLAYLISTS' ? 
+          <IconButton size="large" edge="start" color="inherit" aria-label="open drawer" sx={{ mr: 2 }}>
+                <GroupIcon onClick={handleAllUsersClicked} />
+          </IconButton> 
+              :
+          <IconButton size="large" edge="start" color="inherit" aria-label="open drawer" sx={{ mr: 2 }}>
+                <GroupOutlinedIcon onClick={handleAllUsersClicked} />
+          </IconButton>;
+
+const userButton = store.screen === 'USER' ? 
+          <IconButton size="large" edge="start" color="inherit" aria-label="open drawer" sx={{ mr: 2 }}>
+                <PersonIcon onClick={handleUserClicked} />
+          </IconButton> 
+              :
+          <IconButton size="large" edge="start" color="inherit" aria-label="open drawer" sx={{ mr: 2 }}>
+                <PersonOutlineIcon onClick={handleUserClicked} />
+          </IconButton>;
+
+  
+
+              
+              
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -116,45 +164,21 @@ export default function MenuBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            <HomeIcon />
-          </IconButton>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            <GroupIcon />
-          </IconButton>
-
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            <PersonIcon />
-          </IconButton>
-          <Search>
+          { homeButton }
+          { allUsersButton }
+          { userButton }
+          <Search style={{width: '50%'}}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
+              disabled={store.screen === 'HOME'}
               style={{width: '20vw'}}
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
-          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ flexGrow: 1 }}/>
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <IconButton
               size="large"
