@@ -12,7 +12,7 @@ import List from '@mui/material/List';
 import Typography from '@mui/material/Typography'
 import MUITabs from './MUITabs';
 import MUIRemoveSongModal from './MUIRemoveSongModal';
-import EditToolbar from './EditToolbar';
+import Box from '@mui/material/Box';
 /*
     This React component lists all the top5 lists in the UI.
     
@@ -88,17 +88,23 @@ const HomeScreen = () => {
                 { modalJSX }
             </div>
 
+            {store.screen === "HOME" ? 
             <div id="list-selector-heading">
-                    <Fab 
-                        color="primary" 
-                        aria-label="add"
-                        id="add-list-button"
-                        onClick={handleCreateNewList}
-                    >
-                        <AddIcon />
-                    </Fab>
-                    <Typography variant="h3">Your Lists</Typography>
-            </div>
+                <Fab 
+                    color="primary" 
+                    aria-label="add"
+                    id="add-list-button"
+                    onClick={handleCreateNewList}
+                >
+                    <AddIcon />
+                </Fab>
+                <Typography variant="h3">Your Lists</Typography>
+            </div> : 
+            <Box id="list-selector-heading">
+                <Typography variant="h3">"Search Term"</Typography>
+            </Box> }
+
+            
         </div>)
 }
 

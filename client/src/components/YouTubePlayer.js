@@ -90,7 +90,7 @@ const YouTubePlayer = (props) => {
     const handlePrevious = (event) => {
         currentSongIndex--;
         if (currentSongIndex < 0) {
-            currentSongIndex = playlist.length - 1;
+            currentSongIndex = 0;
         }
         console.log(playlist);
         console.log(currentSongIndex);
@@ -112,9 +112,9 @@ const YouTubePlayer = (props) => {
 
     const handleSkip = (event) => {
         currentSongIndex++;
-        if (currentSongIndex > playlist.length - 1) {
-            currentSongIndex = 0;
-        }
+        // if (currentSongIndex > playlist.length - 1) {
+        //     currentSongIndex = 0;
+        // }
         console.log(currentSongIndex);
         console.log(playlist);
         setCurrentSong(currentList[currentSongIndex]);

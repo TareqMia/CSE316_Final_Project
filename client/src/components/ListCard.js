@@ -166,6 +166,7 @@ function ListCard(props) {
                         </div>
                         : null }
                     </div>
+                    <Box style={{width: '20%'}}></Box>
 
                     {published ?  
                     <div style={{display: 'flex',  flexDirection:'column', alignItems: 'center', gap: '10px'}}>
@@ -192,10 +193,7 @@ function ListCard(props) {
                         </div>
                     </div>
                     : null}
-
                     <IconButton fullWidth={false} style={{ backgroundColor: 'transparent' }} onClick={(event) => {
-
-                        
                         toggleOpen(idNamePair._id);
                          
                     } }>

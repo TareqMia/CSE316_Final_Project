@@ -30,7 +30,7 @@ const PlaylistDescription = (props) => {
 
             <div style={{display: 'flex', justifyContent: 'center', marginTop: '0.5rem'}}>
                 <Box  sx={{border: 1, width: '20rem', height: '5rem', display: 'flex', justifyContent: 'center', borderRadius: '15px'}}>
-                    <IconButton size='large' onClick={handlePrevious}>
+                    <IconButton size='large' onClick={handlePrevious} disabled={store.currentList && index === 0}>
                         <FastRewindIcon />
                     </IconButton>
                     <IconButton size='large' onClick={event => handlePlay(event)}>
@@ -39,7 +39,7 @@ const PlaylistDescription = (props) => {
                     <IconButton size='large' onClick={handlePause}>
                         <PauseIcon />
                     </IconButton>
-                    <IconButton size='large' onClick={handleSkip}>
+                    <IconButton size='large' onClick={handleSkip} disabled={store.currentList && index === store.currentList.songs.length - 1}>
                         <FastForwardIcon />
                     </IconButton>
 

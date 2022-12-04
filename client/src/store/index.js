@@ -641,7 +641,8 @@ function GlobalStoreContextProvider(props) {
                 storeReducer({
                     type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
                     payload: sorted
-                });  
+                });
+                break;  
             }
 
             case sortType.LISTENS: {
@@ -652,29 +653,32 @@ function GlobalStoreContextProvider(props) {
                 storeReducer({
                     type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
                     payload: sorted
-                });  
+                }); 
+                break; 
             }
 
             case sortType.LIKES: {
                 let sorted = store.idNamePairs.sort((a,b) => {
-                    return b.numberOfLikes - a.numberOfLikes;
+                    return b.numberOfLikes.length - a.numberOfLikes.length;
                 });
                 console.log(sorted);
                 storeReducer({
                     type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
                     payload: sorted
-                });  
+                }); 
+                break; 
             }
 
             case sortType.DISLIKES: {
                 let sorted = store.idNamePairs.sort((a,b) => {
-                    return b.numberOfDislikes - a.numberOfDislikes;
+                    return b.numberOfDislikes.length - a.numberOfDislikes.length;
                 });
                 console.log(sorted);
                 storeReducer({
                     type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
                     payload: sorted
-                });  
+                }); 
+                break; 
             }
 
 
