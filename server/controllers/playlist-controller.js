@@ -68,6 +68,7 @@ deletePlaylist = async (req, res) => {
                     }).catch(err => console.log(err))
                 }
                 else {
+                    console.log("testing 1")
                     console.log("incorrect user!");
                     return res.status(400).json({ 
                         errorMessage: "authentication error" 
@@ -86,13 +87,14 @@ getPlaylistById = async (req, res) => {
             return res.status(400).json({ success: false, error: err });
         }
         console.log("Found list: " + JSON.stringify(list));
+        
 
         // DOES THIS LIST BELONG TO THIS USER?
         async function asyncFindUser(list) {
             await User.findOne({ email: list.ownerEmail }, (err, user) => {
                 console.log("user._id: " + user._id);
                 console.log("req.userId: " + req.userId);
-                if (user._id == req.userId) {
+                if (user) {
                     console.log("correct user!");
                     return res.status(200).json({ success: true, playlist: list })
                 }
@@ -188,7 +190,7 @@ updatePlaylist = async (req, res) => {
             await User.findOne({ email: list.ownerEmail }, (err, user) => {
                 console.log("user._id: " + user._id);
                 console.log("req.userId: " + req.userId);
-                if (user._id == req.userId) {
+                if (user) {
                     console.log("correct user!");
                     console.log("req.body.name: " + req.body.name);
 
@@ -217,6 +219,7 @@ updatePlaylist = async (req, res) => {
                         })
                 }
                 else {
+                    console.log("testing 2")
                     console.log("incorrect user!");
                     return res.status(400).json({ success: false, description: "authentication error" });
                 }
@@ -225,11 +228,28 @@ updatePlaylist = async (req, res) => {
         asyncFindUser(playlist);
     })
 }
+
+getPlaylistsBySearch = async (req, res) => {
+    const searchText = req.params.searchText;
+    await Playlist.find({name: {$regex: searchText}, published: true}, (err, playlists) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        if (!playlists.length) {
+            return res
+                .status(404)
+                .json({ success: false, error: `Playlists not found` })
+        }
+        
+        return res.status(200).json({ success: true, data: playlists })
+    }).catch(err => console.log(err))
+}
 module.exports = {
     createPlaylist,
     deletePlaylist,
     getPlaylistById,
     getPlaylistPairs,
     getPlaylists,
-    updatePlaylist
+    updatePlaylist,
+    getPlaylistsBySearch
 }

@@ -51,7 +51,7 @@ const HomeScreen = () => {
         store.createNewList();
     }
     let listCard = "";
-    if (store) {
+    if (store && store.screen === 'HOME') {
         listCard = 
             <List sx={{ width: '90%', left: '5%', top:'5%' }}>
             {
@@ -67,6 +67,25 @@ const HomeScreen = () => {
                 ))
             }
             </List>;
+    }
+
+    if (store.screen === "ALL_PLAYLISTS" && store.queryResult) {
+        listCard = 
+            <List sx={{ width: '90%', left: '5%', top:'5%' }}>
+            {
+                store.queryResult.map((pair) => (
+                    <ListCard
+                        style={{zIndex: '900'}}
+                        key={pair._id}
+                        idNamePair={pair}
+                        selected={store.currentList && store.currentList._id === pair._id}
+                        expandPlaylist={showPlaylist}
+                        toggleOpen={toggleOpen}
+                    />
+                ))
+            }
+            </List>;
+
     }
     return (
         <div id="playlister-list-selector">

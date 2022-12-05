@@ -31,7 +31,8 @@ export const GlobalStoreActionType = {
     EDIT_SONG: "EDIT_SONG",
     REMOVE_SONG: "REMOVE_SONG",
     HIDE_MODALS: "HIDE_MODALS",
-    CHANGE_SCREEN: 'CHANGE_SCREEN'
+    CHANGE_SCREEN: 'CHANGE_SCREEN',
+    LOAD_ALL_PLAYLISTS_BY_SEARCH: 'LOAD_ALL_PLAYLISTS_BY_SEARCH'
 }
 
 // WE'LL NEED THIS TO PROCESS TRANSACTIONS
@@ -72,7 +73,8 @@ function GlobalStoreContextProvider(props) {
         listNameActive: false,
         listIdMarkedForDeletion: null,
         listMarkedForDeletion: null,
-        screen: CurrentScreen.HOME
+        screen: CurrentScreen.HOME,
+        queryResult: null
     });
     const history = useHistory();
     const [counter, setCounter] = useState(0);
@@ -177,7 +179,8 @@ function GlobalStoreContextProvider(props) {
                     listNameActive: false,
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
-                    screen: store.screen
+                    screen: store.screen,
+                    queryResult: store.queryResult
                 });
             }
             // START EDITING A LIST NAME
@@ -252,6 +255,21 @@ function GlobalStoreContextProvider(props) {
                     screen: payload.screen
                 })
             } 
+            case GlobalStoreActionType.LOAD_ALL_PLAYLISTS_BY_SEARCH: {
+                return setStore({
+                    currentModal : CurrentModal.NONE,
+                    idNamePairs: store.idNamePairs,
+                    currentList: null,
+                    currentSongIndex: -1,
+                    currentSong: null,
+                    newListCounter: store.newListCounter,
+                    listNameActive: false,
+                    listIdMarkedForDeletion: null,
+                    listMarkedForDeletion: null,
+                    screen: payload.screen,
+                    queryResult: payload.playlists
+                })
+            }
             default:
                 return store;
         }
@@ -415,6 +433,7 @@ function GlobalStoreContextProvider(props) {
 
                 response = await api.updatePlaylistById(playlist._id, playlist);
                 if (response.data.success) {
+                    console.log(response);
                     storeReducer({
                         type: GlobalStoreActionType.SET_CURRENT_LIST,
                         payload: playlist
@@ -720,6 +739,25 @@ function GlobalStoreContextProvider(props) {
         });
     }
 
+    store.getPlaylistsBySearch = (text) => {
+        const getPlaylistsBySearch = async (searchText) => {
+            let response = await api.getPlaylistsBySearch(searchText);
+            if (response.data.success) {
+                let playlists = response.data.data;
+                storeReducer({
+                    type: GlobalStoreActionType.LOAD_ALL_PLAYLISTS_BY_SEARCH,
+                    payload: {
+                        playlists: playlists,
+                        screen: store.screen
+                    }
+                })
+            }
+        }
+        getPlaylistsBySearch(text);
+
+        
+        console.log(store.queryResult);
+    }
 
     return (
         <GlobalStoreContext.Provider value={{

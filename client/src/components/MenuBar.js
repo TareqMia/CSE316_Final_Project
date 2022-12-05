@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -66,6 +66,7 @@ export default function MenuBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
+  const [text, setText] = useState('');
   const sortType = {
     NAME: 'name',
     DATE: 'date',
@@ -102,6 +103,9 @@ export default function MenuBar() {
     store.loadUserPlaylists()
   }
 
+
+
+
   const homeButton = store.screen === 'HOME' ? 
           <IconButton size="large" edge="start" color="inherit" aria-label="open drawer" sx={{ mr: 2 }}>
                 <HomeIcon onClick={handleHomeClicked} />
@@ -129,7 +133,11 @@ const userButton = store.screen === 'USER' ?
                 <PersonOutlineIcon onClick={handleUserClicked} />
           </IconButton>;
 
-  
+const handleSubmit = (event) => {
+  if (event.keyCode === 13) {
+    store.getPlaylistsBySearch(text);
+  }
+} 
 
               
               
@@ -167,7 +175,7 @@ const userButton = store.screen === 'USER' ?
           { homeButton }
           { allUsersButton }
           { userButton }
-          <Search style={{width: '50%'}}>
+          <Search style={{width: '50%'}} onChange={(event) => setText(event.target.value)} onKeyDown={handleSubmit}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
