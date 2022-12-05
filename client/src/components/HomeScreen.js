@@ -43,6 +43,8 @@ const HomeScreen = () => {
         modalJSX = <MUIRemoveSongModal />;
     }
 
+    let text = typeof(store.searchText) === 'undefined' ? "Playlists" : store.searchText + " Playlists"
+
     useEffect(() => {
         store.loadIdNamePairs();
     }, []);
@@ -114,13 +116,14 @@ const HomeScreen = () => {
                     aria-label="add"
                     id="add-list-button"
                     onClick={handleCreateNewList}
+                    style={{scale: '0.9'}}
                 >
                     <AddIcon />
                 </Fab>
-                <Typography variant="h3">Your Lists</Typography>
+                <Typography fontSize={'45px'} variant="h3">Your Lists</Typography>
             </div> : 
             <Box id="list-selector-heading">
-                <Typography variant="h3">"Search Term"</Typography>
+                <Typography variant="h3" fontSize={'45px'}>{text}</Typography>
             </Box> }
 
             

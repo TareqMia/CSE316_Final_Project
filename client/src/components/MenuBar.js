@@ -93,10 +93,12 @@ export default function MenuBar() {
 
   const handleAllUsersClicked = (event) => {
     store.loadAllPlaylists();
+    setText('');
   }
 
   const handleHomeClicked = (event) => {
     store.loadOwnedPlaylists();
+    setText('');
   }
 
   const handleUserClicked = (event) => {
@@ -184,6 +186,7 @@ const handleSubmit = (event) => {
               style={{width: '20vw'}}
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
+              value={text}
             />
           </Search>
           <Box sx={{ flexGrow: 1 }}/>

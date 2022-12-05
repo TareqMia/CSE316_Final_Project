@@ -74,7 +74,8 @@ function GlobalStoreContextProvider(props) {
         listIdMarkedForDeletion: null,
         listMarkedForDeletion: null,
         screen: CurrentScreen.HOME,
-        queryResult: null
+        queryResult: null,
+        searchText: ''
     });
     const history = useHistory();
     const [counter, setCounter] = useState(0);
@@ -268,7 +269,8 @@ function GlobalStoreContextProvider(props) {
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
                     screen: payload.screen,
-                    queryResult: payload.playlists
+                    queryResult: payload.playlists,
+                    searchText: payload.searchText
                 })
             }
             default:
@@ -751,7 +753,8 @@ function GlobalStoreContextProvider(props) {
                     type: GlobalStoreActionType.LOAD_ALL_PLAYLISTS_BY_SEARCH,
                     payload: {
                         playlists: playlists,
-                        screen: store.screen
+                        screen: store.screen,
+                        searchText: text
                     }
                 })
             }
