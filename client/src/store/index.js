@@ -151,7 +151,9 @@ function GlobalStoreContextProvider(props) {
                     listNameActive: false,
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
-                    screen: store.screen
+                    screen: store.screen,
+                    queryResult: payload,
+                    searchText: store.searchText
                 });
             }
             // PREPARE TO DELETE A LIST
@@ -647,9 +649,16 @@ function GlobalStoreContextProvider(props) {
     store.sortLists = (type) => {
         switch (type) {
             case sortType.NAME: {
-                let sorted = store.idNamePairs.sort((a, b) => {
-                    return ('' + a.name).localeCompare(b.name);
-                });
+                let sorted;
+                if (store.screen !== CurrentScreen.HOME) {
+                    sorted = store.queryResult.sort((a, b) => {
+                        return ('' + a.name).localeCompare(b.name);
+                    });
+                } else {
+                    sorted = store.idNamePairs.sort((a, b) => {
+                        return ('' + a.name).localeCompare(b.name);
+                    });
+                }
                 storeReducer({
                     type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
                     payload: sorted
@@ -658,51 +667,75 @@ function GlobalStoreContextProvider(props) {
             }
 
             case sortType.DATE: {
-                let sorted = store.idNamePairs.sort((a,b) => {
-                    return new Date(b.publishedOn) - new Date(a.publishedOn);
-                });
-                console.log(sorted);
+                let sorted;
+                if (store.screen !== CurrentScreen.HOME) {
+                    sorted = store.queryResult.sort((a, b) => {
+                        return new Date(b.publishedOn) - new Date(a.publishedOn);
+                    });
+                } else {
+                    sorted = store.idNamePairs.sort((a, b) => {
+                        return new Date(b.publishedOn) - new Date(a.publishedOn);
+                    });
+                }
                 storeReducer({
                     type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
                     payload: sorted
-                });
-                break;  
+                });  
+                break;
             }
 
             case sortType.LISTENS: {
-                let sorted = store.idNamePairs.sort((a,b) => {
-                    return b.numberOfListens - a.numberOfListens;
-                });
-                console.log(sorted);
+                let sorted;
+                if (store.screen !== CurrentScreen.HOME) {
+                    sorted = store.queryResult.sort((a, b) => {
+                        return b.numberOfListens - a.numberOfListens;
+                    });
+                } else {
+                    sorted = store.idNamePairs.sort((a, b) => {
+                        return b.numberOfListens - a.numberOfListens;
+                    });
+                }
                 storeReducer({
                     type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
                     payload: sorted
-                }); 
-                break; 
+                });  
+                break;
             }
 
             case sortType.LIKES: {
-                let sorted = store.idNamePairs.sort((a,b) => {
-                    return b.numberOfLikes.length - a.numberOfLikes.length;
-                });
-                console.log(sorted);
+                let sorted;
+                if (store.screen !== CurrentScreen.HOME) {
+                    sorted = store.queryResult.sort((a, b) => {
+                        return b.numberOfLikes.length - a.numberOfLikes.length;
+                    });
+                } else {
+                    sorted = store.idNamePairs.sort((a, b) => {
+                        return b.numberOfLikes.length - a.numberOfLikes.length;
+                    });
+                }
                 storeReducer({
                     type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
                     payload: sorted
-                }); 
-                break; 
+                });  
+                break;
             }
 
             case sortType.DISLIKES: {
-                let sorted = store.idNamePairs.sort((a,b) => {
-                    return b.numberOfDislikes.length - a.numberOfDislikes.length;
-                });
-                console.log(sorted);
+                let sorted;
+                if (store.screen !== CurrentScreen.HOME) {
+                    sorted = store.queryResult.sort((a, b) => {
+                        return b.numberOfDislikes.length - a.numberOfDislikes.length;
+                    });
+                } else {
+                    sorted = store.idNamePairs.sort((a, b) => {
+                        return b.numberOfDislikes.length - a.numberOfDislikes.length;
+                    });
+                }
                 storeReducer({
                     type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
                     payload: sorted
-                }); 
-                break; 
+                });  
+                break;
             }
 
 
