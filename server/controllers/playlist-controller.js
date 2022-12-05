@@ -146,7 +146,10 @@ getPlaylistPairs = async (req, res) => {
                 }
             }).catch(err => console.log(err))
         }
-        asyncFindList(user.email);
+        if (req.userId !== 'Guest') {
+             asyncFindList(user.email);
+        }
+       
     }).catch(err => console.log(err))
 }
 getPlaylists = async (req, res) => {

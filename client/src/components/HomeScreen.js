@@ -22,19 +22,6 @@ const HomeScreen = () => {
     const { store } = useContext(GlobalStoreContext);
     const { auth } = useContext(AuthContext);
 
-    const [showPlaylist, setShowPlaylist] = useState([]);
-    
-    const toggleOpen = (id) => {
-        if (showPlaylist.includes(id)) {
-            setShowPlaylist(showPlaylist.filter(sid => sid !== id));
-        } else {
-            console.log(showPlaylist);
-            showPlaylist.shift();
-            showPlaylist.push(id);
-            setShowPlaylist(showPlaylist);
-        }
-    }
-
     let modalJSX = "";
     if (store.isEditSongModalOpen()) {
         modalJSX = <MUIEditSongModal />;
@@ -46,6 +33,9 @@ const HomeScreen = () => {
     let text = typeof(store.searchText) === 'undefined' ? "Playlists" : store.searchText + " Playlists"
 
     useEffect(() => {
+        if (auth.guest) {
+            store.loadAllPlaylists();
+        }
         store.loadIdNamePairs();
     }, []);
 
@@ -63,8 +53,6 @@ const HomeScreen = () => {
                         key={pair._id}
                         idNamePair={pair}
                         selected={store.currentList && store.currentList._id === pair._id}
-                        expandPlaylist={showPlaylist}
-                        toggleOpen={toggleOpen}
                     />
                 ))
             }
@@ -81,8 +69,6 @@ const HomeScreen = () => {
                         key={pair._id}
                         idNamePair={pair}
                         selected={store.currentList && store.currentList._id === pair._id}
-                        expandPlaylist={showPlaylist}
-                        toggleOpen={toggleOpen}
                     />
                 ))
             }

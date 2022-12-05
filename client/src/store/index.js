@@ -736,13 +736,8 @@ function GlobalStoreContextProvider(props) {
                     payload: sorted
                 });  
                 break;
-            }
-
-
-            
+            } 
         }
-        
-        
     }
 
     // ALL LISTS SCREEN

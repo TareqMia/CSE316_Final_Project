@@ -29,11 +29,11 @@ function ListCard(props) {
     const { auth } = useContext(AuthContext);
     const [editActive, setEditActive] = useState(false);
     const [text, setText] = useState("");
-    const { idNamePair, selected, expandPlaylist, toggleOpen} = props;
+    const { idNamePair, selected} = props;
     const [likes, setLikes] = useState(idNamePair.numberOfLikes.length);
     const [dislikes, setDislikes] = useState(idNamePair.numberOfDislikes.length);
-    const [liked, setLiked] = useState(idNamePair.numberOfLikes.includes(auth.user.email));
-    const [disliked, setDisliked] = useState(idNamePair.numberOfDislikes.includes(auth.user.email));
+    const [liked, setLiked] = useState(!auth.guest ? idNamePair.numberOfLikes.includes(auth.user.email): 0);
+    const [disliked, setDisliked] = useState(!auth.guest ? idNamePair.numberOfDislikes.includes(auth.user.email) : 0);
     const [published, setPublished] = useState(idNamePair.published);
     const [expanded, setExpanded] = useState(false);
 
@@ -48,10 +48,6 @@ function ListCard(props) {
                 _id = ("" + _id).substring("list-card-text-".length);
 
             console.log("load " + event.target.id);
-
-            if (store.currentList && idNamePair._id != store.currentList._id) {
-                toggleOpen(expandPlaylist);
-            }
 
             // CHANGE THE CURRENT LIST
             store.setCurrentList(id);
@@ -225,10 +221,9 @@ function ListCard(props) {
                     >
                     </AccordionSummary>
                     <AccordionDetails>
-                   
-                <div >
-                     <WorkspaceScreen setPublished={setPublished} className='workspace' />
-                 </div>
+                        <div>
+                            <WorkspaceScreen setPublished={setPublished} className='workspace' />
+                        </div>
                     </AccordionDetails>
                 </Accordion>
             </Box>

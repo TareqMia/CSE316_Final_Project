@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -20,6 +20,7 @@ import GlobalStoreContext from '../store';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import AuthContext from '../auth';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -62,7 +63,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function MenuBar() {
-  const { store } = React.useContext(GlobalStoreContext);
+  const { store } = useContext(GlobalStoreContext);
+  const { auth } = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -109,11 +111,11 @@ export default function MenuBar() {
 
 
   const homeButton = store.screen === 'HOME' ? 
-          <IconButton size="large" edge="start" color="inherit" aria-label="open drawer" sx={{ mr: 2 }}>
+          <IconButton disabled={auth.guest} size="large" edge="start" color="inherit" aria-label="open drawer" sx={{ mr: 2 }}>
                 <HomeIcon onClick={handleHomeClicked} />
           </IconButton> 
               :
-          <IconButton size="large" edge="start" color="inherit" aria-label="open drawer" sx={{ mr: 2 }}>
+          <IconButton disabled={auth.guest} size="large" edge="start" color="inherit" aria-label="open drawer" sx={{ mr: 2 }}>
                 <HomeOutlinedIcon onClick={handleHomeClicked} />
           </IconButton>;
           

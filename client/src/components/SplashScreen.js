@@ -1,7 +1,10 @@
 import { Box, Button, Typography } from "@mui/material";
+import { useContext } from "react";
 import { Link } from 'react-router-dom';
+import AuthContext from "../auth";
 
 export default function SplashScreen () {
+  const { auth } = useContext(AuthContext);
   return (
 
     <div id='splash-screen' style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
@@ -45,8 +48,9 @@ export default function SplashScreen () {
               </Link>
           </Button>
 
-          <Button size="large" variant='outlined'>
-            Continue as Guest
+          <Button size="large" variant='outlined' onClick={() => auth.loginGuest()}>
+            <Link to='/loginguest' style={{ textDecoration: 'none' }}>Continue as Guest</Link>
+            
           </Button>
         </div>
     </div>
