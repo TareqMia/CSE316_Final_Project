@@ -119,7 +119,8 @@ function GlobalStoreContextProvider(props) {
                     listNameActive: false,
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
-                    screen: store.screen
+                    screen: store.screen,
+                    queryResult: store.queryResult
                 })
             }
             // CREATE A NEW LIST
@@ -313,9 +314,11 @@ function GlobalStoreContextProvider(props) {
     store.closeCurrentList = function () {
         storeReducer({
             type: GlobalStoreActionType.CLOSE_CURRENT_LIST,
-            payload: {}
+            payload: {
+
+            }
         });
-        history.goBack();
+        // history.goBack();
         tps.clearAllTransactions();
     }
 

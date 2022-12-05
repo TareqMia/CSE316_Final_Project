@@ -35,6 +35,7 @@ function ListCard(props) {
     const [liked, setLiked] = useState(idNamePair.numberOfLikes.includes(auth.user.email));
     const [disliked, setDisliked] = useState(idNamePair.numberOfDislikes.includes(auth.user.email));
     const [published, setPublished] = useState(idNamePair.published);
+    const [expanded, setExpanded] = useState(false);
 
 
     let date = new Date(idNamePair.publishedOn).toDateString();
@@ -111,6 +112,23 @@ function ListCard(props) {
         }
         setDislikes(newDislikes);
     }
+
+    const handleExpandChange = (panel) => (event, isExpanded) => {
+        setExpanded(isExpanded ? panel : false);
+        if (store.currentList) {
+           if (idNamePair._id === store.currentList._id) {
+                store.closeCurrentList()
+           }
+           else if (idNamePair._id !== store.currentList._id) {
+                store.setCurrentList(idNamePair._id);
+           }
+        }
+        else {
+            store.setCurrentList(idNamePair._id)
+        }
+    }
+
+    let expand = store.currentList && store.currentList._id === idNamePair._id;
 
     let playlistLiked = liked ? 
         <ThumbUpIcon size='large' fullWidth={false} /> : <ThumbUpOffAltIcon size='large' fullWidth={false} />;
@@ -193,21 +211,26 @@ function ListCard(props) {
                         </div>
                     </div>
                     : null}
-                    <IconButton fullWidth={false} style={{ backgroundColor: 'transparent' }} onClick={(event) => {
-                        toggleOpen(idNamePair._id);
-                         
-                    } }>
-                        <ExpandMoreIcon size='large' fullWidth={false} />
-                    </IconButton>
-
-
-                    
                 </Box>
-                { expandPlaylist.includes(idNamePair._id) ? 
+                <Accordion elevation={0}
+                    expanded={expand}
+                    style={{backgroundColor: color}}  
+                    sx={{
+                        '&:before': {
+                            display: 'none',
+                        }
+                    }}>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon onClick={handleExpandChange('panel' + idNamePair._id)} />}
+                    >
+                    </AccordionSummary>
+                    <AccordionDetails>
+                   
                 <div >
                      <WorkspaceScreen setPublished={setPublished} className='workspace' />
-                 </div> : null
-                }
+                 </div>
+                    </AccordionDetails>
+                </Accordion>
             </Box>
         </ListItem>
         
