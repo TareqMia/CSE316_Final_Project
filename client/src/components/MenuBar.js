@@ -4,9 +4,7 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -104,7 +102,8 @@ export default function MenuBar() {
   }
 
   const handleUserClicked = (event) => {
-    store.loadUserPlaylists()
+    store.loadUserPlaylists();
+    setText('');
   }
 
 
@@ -191,7 +190,7 @@ const handleSubmit = (event) => {
               style={{width: '20vw'}}
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
-              value={text}
+              value={store.searchText}
             />
           </Search>
           <Box sx={{ flexGrow: 1 }}/>

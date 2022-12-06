@@ -52,15 +52,30 @@ function WorkspaceScreen(props) {
         }
     }
 
+    const handleDuplicate = () => {
+        let list = store.currentList;
+        let count = 1;
+        for (let i = 0; i < store.idNamePairs.length; i++) {
+            if (store.idNamePairs[i].name === list.name || store.idNamePairs[i].name === list.name + count) {
+                count++;
+            }
+        }
+        let name = count === 1 ? list.name : list.name + `${count}`;
+        store.duplicateList(list, name);
+    }
+
     let buttons = !auth.guest ? 
     <div style={{display: 'flex', flexDirection: 'row'}}>
-       <IconButton style={{display: 'flex', flexDirection: 'column'}}>
-    <DeleteIcon style={{height: '30px'}} onClick={(event) => handleDeleteList(event, store.currentList._id)} />
-    <div style={{fontSize: '10px'}}>Delete</div>   
-    </IconButton>
+        {store.screen === 'HOME' ?
+        
+        <IconButton style={{display: 'flex', flexDirection: 'column'}}>
+        <DeleteIcon style={{height: '30px'}} onClick={(event) => handleDeleteList(event, store.currentList._id)} />
+             <div style={{fontSize: '10px'}}>Delete</div>   
+        </IconButton> : null }
+       
 
     <IconButton style={{display: 'flex', flexDirection: 'column', gap: '5px'}}>
-        <FileCopyIcon />
+        <FileCopyIcon onClick={handleDuplicate} />
         <div style={{fontSize: '10px'}}>Duplicate</div> 
     </IconButton> 
     </div> : null; 

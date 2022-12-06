@@ -99,7 +99,7 @@ getPlaylistById = async (req, res) => {
                     return res.status(200).json({ success: true, playlist: list })
                 }
                 else {
-                    console.log("incorrect user!");
+                    console.log("incorrect user 2!");
                     return res.status(400).json({ success: false, description: "authentication error" });
                 }
             });
@@ -223,7 +223,7 @@ updatePlaylist = async (req, res) => {
                 }
                 else {
                     console.log("testing 2")
-                    console.log("incorrect user!");
+                    console.log("incorrect user 3!");
                     return res.status(400).json({ success: false, description: "authentication error" });
                 }
             });

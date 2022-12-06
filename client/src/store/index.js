@@ -152,9 +152,9 @@ function GlobalStoreContextProvider(props) {
                     listNameActive: false,
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
-                    screen: store.screen,
+                    screen: CurrentScreen.HOME,
                     queryResult: payload,
-                    searchText: store.searchText
+                    searchText: ''
                 });
             }
             // PREPARE TO DELETE A LIST
@@ -348,7 +348,6 @@ function GlobalStoreContextProvider(props) {
     store.createNewList = async function () {
         let newListName = "Untitled" + counter;
         setCounter(counter + 1);
-        console.log("=============");
         console.log(store.newListCounter);
         const response = await api.createPlaylist(newListName, [], auth.user.email, false, [], [], 0, [], 
             auth.user.userName, new Date());
@@ -829,6 +828,21 @@ function GlobalStoreContextProvider(props) {
             }
         }
         getUserPlaylistsBySearch(text);
+    }
+
+    store.duplicateList = async (playlist, newName) => {
+        const response = await api.createPlaylist(newName, playlist.songs, auth.user.email, false, [], [], 0, [], 
+            auth.user.userName, new Date());
+        console.log("createNewList response: " + response);
+        if (response.status === 201) {
+            let playlist = response.data.playlist
+            tps.clearAllTransactions();
+            store.loadIdNamePairs();
+        }
+        else {
+            console.log("API FAILED TO CREATE A NEW LIST");
+        }
+
     }
 
     return (
