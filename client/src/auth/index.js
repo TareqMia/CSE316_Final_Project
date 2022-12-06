@@ -142,7 +142,7 @@ function AuthContextProvider(props) {
             payload: {
                 guest: true,
                 loggedIn: true,
-                errorMsg: null
+                errorMsg: ''
             }
         });
         history.push('/')

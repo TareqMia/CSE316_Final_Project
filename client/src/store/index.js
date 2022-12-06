@@ -32,7 +32,8 @@ export const GlobalStoreActionType = {
     REMOVE_SONG: "REMOVE_SONG",
     HIDE_MODALS: "HIDE_MODALS",
     CHANGE_SCREEN: 'CHANGE_SCREEN',
-    LOAD_ALL_PLAYLISTS_BY_SEARCH: 'LOAD_ALL_PLAYLISTS_BY_SEARCH'
+    LOAD_ALL_PLAYLISTS_BY_SEARCH: 'LOAD_ALL_PLAYLISTS_BY_SEARCH',
+    LOAD_ALL_USER_PLAYLISTS_BY_SEARCH: 'LOAD_ALL_USER_PLAYLISTS_BY_SEARCH'
 }
 
 // WE'LL NEED THIS TO PROCESS TRANSACTIONS
@@ -184,7 +185,8 @@ function GlobalStoreContextProvider(props) {
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
                     screen: store.screen,
-                    queryResult: store.queryResult
+                    queryResult: store.queryResult,
+                    searchText: store.searchText
                 });
             }
             // START EDITING A LIST NAME
@@ -260,6 +262,22 @@ function GlobalStoreContextProvider(props) {
                 })
             } 
             case GlobalStoreActionType.LOAD_ALL_PLAYLISTS_BY_SEARCH: {
+                return setStore({
+                    currentModal : CurrentModal.NONE,
+                    idNamePairs: store.idNamePairs,
+                    currentList: null,
+                    currentSongIndex: -1,
+                    currentSong: null,
+                    newListCounter: store.newListCounter,
+                    listNameActive: false,
+                    listIdMarkedForDeletion: null,
+                    listMarkedForDeletion: null,
+                    screen: payload.screen,
+                    queryResult: payload.playlists,
+                    searchText: payload.searchText
+                })
+            }
+            case GlobalStoreActionType.LOAD_ALL_USER_PLAYLISTS_BY_SEARCH: {
                 return setStore({
                     currentModal : CurrentModal.NONE,
                     idNamePairs: store.idNamePairs,
@@ -365,7 +383,9 @@ function GlobalStoreContextProvider(props) {
                 console.log("API FAILED TO GET THE LIST PAIRS");
             }
         }
-        asyncLoadIdNamePairs();
+        if (!auth.guest){
+            asyncLoadIdNamePairs();
+        }
     }
 
     // THE FOLLOWING 5 FUNCTIONS ARE FOR COORDINATING THE DELETION
@@ -752,7 +772,6 @@ function GlobalStoreContextProvider(props) {
     
     // HOME SCREEN 
     store.loadOwnedPlaylists = () => {
-        
         storeReducer({
             type: GlobalStoreActionType.CHANGE_SCREEN,
             payload: {
@@ -763,6 +782,7 @@ function GlobalStoreContextProvider(props) {
 
     // LOAD USER SCREEN
     store.loadUserPlaylists = () => {
+
         storeReducer({
             type: GlobalStoreActionType.CHANGE_SCREEN,
             payload: {
@@ -788,9 +808,27 @@ function GlobalStoreContextProvider(props) {
             }
         }
         getPlaylistsBySearch(text);
-
-        
         console.log(store.queryResult);
+    }
+
+    store.getUserPlaylistsBySearch = (text) => {
+        const getUserPlaylistsBySearch = async (searchText) => {
+            let response = await api.getUserPlaylistsBySearch(searchText);
+            if (response.data.success) {
+                let playlists = response.data.data;
+                console.log(playlists);
+                storeReducer({
+                    type: GlobalStoreActionType.LOAD_ALL_USER_PLAYLISTS_BY_SEARCH,
+                    payload: {
+                        playlists: playlists,
+                        screen: store.screen,
+                        searchText: text
+                    }
+                })
+
+            }
+        }
+        getUserPlaylistsBySearch(text);
     }
 
     return (

@@ -189,7 +189,7 @@ body {
 .unselected-list-card:hover {
   cursor: pointer;
   background-color: var(--swatch-contrast);
-  color: rgb(28, 101, 219);
+  color: rgb(110, 111, 111);
 }
 
 .selected-list-card {

@@ -59,7 +59,7 @@ const HomeScreen = () => {
             </List>;
     }
 
-    if (store.screen === "ALL_PLAYLISTS" && store.queryResult) {
+    if ((store.screen === "ALL_PLAYLISTS" || store.screen === 'USER') && store.queryResult) {
         listCard = 
             <List sx={{ width: '90%', left: '5%', top:'5%' }}>
             {

@@ -127,10 +127,10 @@ function ListCard(props) {
     let expand = store.currentList && store.currentList._id === idNamePair._id;
 
     let playlistLiked = liked ? 
-        <ThumbUpIcon size='large' fullWidth={false} /> : <ThumbUpOffAltIcon size='large' fullWidth={false} />;
+        <ThumbUpIcon disabled={auth.guest} size='large' fullWidth={false} /> : <ThumbUpOffAltIcon disabled={auth.guest} size='large' fullWidth={false} />;
     
     let playlistDisliked = disliked ? 
-        <ThumbDownIcon size='large' fullWidth={false} /> : <ThumbDownOffAltIcon size='large' fullWidth={false} />;
+        <ThumbDownIcon disabled={auth.guest} size='large' fullWidth={false} /> : <ThumbDownOffAltIcon disabled={auth.guest} size='large' fullWidth={false} />;
 
     let color =  selected ? '#c1c3c7' : 'white';
 

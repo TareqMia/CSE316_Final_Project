@@ -72,17 +72,11 @@ export default function AppBanner() {
         >
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>        
-
-    // let editToolbar = "";
-    // let menu = auth.loggedIn ? loggedInMenu : loggedOutMenu;
-    // if (store.currentList && !store.currentList.published) {
-    //     editToolbar = <EditToolbar />;
-    // }
     
-    function getAccountMenu(loggedIn) {
+    function getAccountMenu(loggedIn, guest) {
         let userInitials = auth.getUserInitials();
         console.log("userInitials: " + userInitials);
-        if (loggedIn) 
+        if (loggedIn && !guest) 
             return <div>{userInitials}</div>;
         else
             return <AccountCircle />;
@@ -102,7 +96,7 @@ export default function AppBanner() {
                         <img src='playlister.png' style={{width: '30%'}}/>
                     </Typography>
                     <Box sx={{ flexGrow: 1 }}></Box>
-                    {auth.loggedIn ? <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                    {auth.loggedIn || auth.guest ? <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                         <IconButton
                             size="large"
                             edge="end"
@@ -112,7 +106,8 @@ export default function AppBanner() {
                             onClick={handleProfileMenuOpen}
                             color="inherit"
                         >
-                            { getAccountMenu(auth.loggedIn) }
+                            
+                            { getAccountMenu(auth.loggedIn, auth.guest) }
                         </IconButton>
                     </Box> : null }
                     

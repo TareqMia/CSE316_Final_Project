@@ -21,8 +21,10 @@ const style = {
 
 export default function AuthErrorModal() {
     const { auth } = useContext(AuthContext);
+    console.log(auth);
 
     function handleCloseModal(event) {
+        console.log(auth.errorMsg)
         auth.hideErrorModal();
     }
 

@@ -54,7 +54,7 @@ const CommentsSection = () => {
                 </div>
                
                 <form onSubmit={handleSubmit}>
-                    <TextField disabled={!store.currentList.published || !auth.loggedIn} value={text} onKeyPress={handleKeyPress} onChange={(event) => setText(event.target.value)} style={{width: '100%'}} label='Add Comment' variant='filled'/>
+                    <TextField disabled={!store.currentList.published || !auth.loggedIn || auth.guest} value={text} onKeyPress={handleKeyPress} onChange={(event) => setText(event.target.value)} style={{width: '100%'}} label='Add Comment' variant='filled'/>
                 </form>
                 
             </Box>

@@ -138,8 +138,11 @@ const userButton = store.screen === 'USER' ?
           </IconButton>;
 
 const handleSubmit = (event) => {
-  if (event.keyCode === 13) {
+  if (event.keyCode === 13 && store.screen === 'ALL_PLAYLISTS') {
     store.getPlaylistsBySearch(text);
+  } 
+  if (event.keyCode === 13 && store.screen === 'USER') {
+    store.getUserPlaylistsBySearch(text);
   }
 } 
 

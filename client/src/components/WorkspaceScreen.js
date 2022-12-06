@@ -51,6 +51,19 @@ function WorkspaceScreen(props) {
             setPublished(true);
         }
     }
+
+    let buttons = !auth.guest ? 
+    <div style={{display: 'flex', flexDirection: 'row'}}>
+       <IconButton style={{display: 'flex', flexDirection: 'column'}}>
+    <DeleteIcon style={{height: '30px'}} onClick={(event) => handleDeleteList(event, store.currentList._id)} />
+    <div style={{fontSize: '10px'}}>Delete</div>   
+    </IconButton>
+
+    <IconButton style={{display: 'flex', flexDirection: 'column', gap: '5px'}}>
+        <FileCopyIcon />
+        <div style={{fontSize: '10px'}}>Duplicate</div> 
+    </IconButton> 
+    </div> : null; 
     
     return (
         <Box>
@@ -73,15 +86,8 @@ function WorkspaceScreen(props) {
          </List>
          <div style={{display: 'flex', flexDirection: 'row'}}>
             
-                <IconButton style={{display: 'flex', flexDirection: 'column'}}>
-                    <DeleteIcon style={{height: '30px'}} onClick={(event) => handleDeleteList(event, store.currentList._id)} />
-                    <div style={{fontSize: '10px'}}>Delete</div>   
-                </IconButton>
-
-                <IconButton style={{display: 'flex', flexDirection: 'column', gap: '5px'}}>
-                    <FileCopyIcon />
-                    <div style={{fontSize: '10px'}}>Duplicate</div> 
-                </IconButton>
+            
+                { buttons }
                 
                 {!store.currentList.published ? 
                 
@@ -96,7 +102,6 @@ function WorkspaceScreen(props) {
          
             
         </div>                     
-         
          </Box>
     )
 }
