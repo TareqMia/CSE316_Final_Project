@@ -54,6 +54,10 @@ export const getUserPlaylistsBySearch = (text) => {
     return api.get(`/searchUser/${text}`);
 }
 
+export const getAllPlaylists = () => {
+    return api.get('/playlists');
+}
+
 const apis = {
     createPlaylist,
     deletePlaylistById,
@@ -61,7 +65,8 @@ const apis = {
     getPlaylistPairs,
     updatePlaylistById,
     getPlaylistsBySearch,
-    getUserPlaylistsBySearch
+    getUserPlaylistsBySearch,
+    getAllPlaylists
 }
 
 export default apis

@@ -7,7 +7,6 @@ import IconButton from '@mui/material/IconButton';
 import InputBase from '@mui/material/InputBase';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import HomeIcon from '@mui/icons-material/Home';
 import GroupIcon from '@mui/icons-material/Group';
@@ -145,9 +144,6 @@ const handleSubmit = (event) => {
   }
 } 
 
-              
-              
-
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -190,7 +186,7 @@ const handleSubmit = (event) => {
               style={{width: '20vw'}}
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
-              value={store.searchText}
+              value={text}
             />
           </Search>
           <Box sx={{ flexGrow: 1 }}/>

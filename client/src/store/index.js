@@ -689,7 +689,9 @@ function GlobalStoreContextProvider(props) {
                 let sorted;
                 if (store.screen !== CurrentScreen.HOME) {
                     sorted = store.queryResult.sort((a, b) => {
-                        return new Date(b.publishedOn) - new Date(a.publishedOn);
+                        let aDate = a.published ? a.publishedOn : a.createdAt;
+                        let bDate = b.published ? b.publishedOn : b.createdAt;
+                        return new Date(bDate) - new Date(aDate);
                     });
                 } else {
                     sorted = store.idNamePairs.sort((a, b) => {
@@ -764,7 +766,8 @@ function GlobalStoreContextProvider(props) {
         storeReducer({
             type: GlobalStoreActionType.CHANGE_SCREEN,
             payload: {
-                screen: CurrentScreen.ALL_PLAYLISTS
+                screen: CurrentScreen.ALL_PLAYLISTS,
+                searchText: ''
             }
         });
     }
@@ -774,7 +777,8 @@ function GlobalStoreContextProvider(props) {
         storeReducer({
             type: GlobalStoreActionType.CHANGE_SCREEN,
             payload: {
-                screen: CurrentScreen.HOME
+                screen: CurrentScreen.HOME,
+                searchText: ''
             }
         });
     }
@@ -786,7 +790,8 @@ function GlobalStoreContextProvider(props) {
             type: GlobalStoreActionType.CHANGE_SCREEN,
             payload: {
                 idNamePairs: null,
-                screen: CurrentScreen.USER
+                screen: CurrentScreen.USER,
+                searchText: ''
             }
         });
     }
@@ -843,6 +848,14 @@ function GlobalStoreContextProvider(props) {
             console.log("API FAILED TO CREATE A NEW LIST");
         }
 
+    }
+
+    store.incrementNumberOfListens = () => {
+        if (store.currentList) {
+            store.currentList.numberOfListens += 1;
+            console.log(store.currentList);
+            store.updateCurrentList();
+        }
     }
 
     return (

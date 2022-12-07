@@ -36,7 +36,7 @@ function ListCard(props) {
     const [disliked, setDisliked] = useState(!auth.guest ? idNamePair.numberOfDislikes.includes(auth.user.email) : 0);
     const [published, setPublished] = useState(idNamePair.published);
     const [expanded, setExpanded] = useState(false);
-
+    const [listens, setListens] = useState(idNamePair.numberOfListens);
 
     let date = new Date(idNamePair.publishedOn).toDateString();
 
@@ -51,6 +51,8 @@ function ListCard(props) {
 
             // CHANGE THE CURRENT LIST
             store.setCurrentList(id);
+            store.incrementNumberOfListens();
+            setListens(idNamePair.numberOfListens + 1);
         }
     }
 
@@ -203,7 +205,7 @@ function ListCard(props) {
                             </div>      
                         </div>
                         <div style={{marginTop: '10px'}}>
-                            <Typography>{`Listens:  ${idNamePair.numberOfListens}`}</Typography>
+                            <Typography>{`Listens:  ${listens}`}</Typography>
                         </div>
                     </div>
                     : null}

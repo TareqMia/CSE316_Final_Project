@@ -197,12 +197,17 @@ updatePlaylist = async (req, res) => {
                     console.log("correct user!");
                     console.log("req.body.name: " + req.body.name);
 
+                    
                     list.name = body.playlist.name;
                     list.songs = body.playlist.songs;
                     list.comments = body.playlist.comments;
                     list.numberOfLikes = body.playlist.numberOfLikes;
                     list.numberOfDislikes = body.playlist.numberOfDislikes;
                     list.published = body.playlist.published;
+                    list.numberOfListens = body.playlist.numberOfListens;
+
+                    console.log('================');
+                    console.log(body.playlist);
                     list
                         .save()
                         .then(() => {
