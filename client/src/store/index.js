@@ -258,7 +258,8 @@ function GlobalStoreContextProvider(props) {
                     listNameActive: false,
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
-                    screen: payload.screen
+                    screen: payload.screen,
+                    searchText: payload.searchText
                 })
             } 
             case GlobalStoreActionType.LOAD_ALL_PLAYLISTS_BY_SEARCH: {

@@ -87,24 +87,24 @@ getPlaylistById = async (req, res) => {
             return res.status(400).json({ success: false, error: err });
         }
         console.log("Found list: " + JSON.stringify(list));
-        
+        return res.status(200).json({ success: true, playlist: list })
 
         // DOES THIS LIST BELONG TO THIS USER?
-        async function asyncFindUser(list) {
-            await User.findOne({ email: list.ownerEmail }, (err, user) => {
-                console.log("user._id: " + user._id);
-                console.log("req.userId: " + req.userId);
-                if (user) {
-                    console.log("correct user!");
-                    return res.status(200).json({ success: true, playlist: list })
-                }
-                else {
-                    console.log("incorrect user 2!");
-                    return res.status(400).json({ success: false, description: "authentication error" });
-                }
-            });
-        }
-        asyncFindUser(list);
+        // async function asyncFindUser(list) {
+        //     await User.findOne({ email: list.ownerEmail }, (err, user) => {
+        //         // console.log("user._id: " + user._id);
+        //         // console.log("req.userId: " + req.userId);
+        //         if (!user || user == null) {
+        //             console.log("correct user!");
+        //             return res.status(200).json({ success: true, playlist: list })
+        //         }
+        //         else {
+        //             console.log("incorrect user 2!");
+        //             return res.status(400).json({ success: false, description: "authentication error" });
+        //         }
+        //     });
+        // }
+        // asyncFindUser(list);
     }).catch(err => console.log(err))
 }
 getPlaylistPairs = async (req, res) => {
@@ -191,11 +191,11 @@ updatePlaylist = async (req, res) => {
         // DOES THIS LIST BELONG TO THIS USER?
         async function asyncFindUser(list) {
             await User.findOne({ email: list.ownerEmail }, (err, user) => {
-                console.log("user._id: " + user._id);
-                console.log("req.userId: " + req.userId);
-                if (user) {
-                    console.log("correct user!");
-                    console.log("req.body.name: " + req.body.name);
+                // console.log("user._id: " + user._id);
+                // console.log("req.userId: " + req.userId);
+                if (user || user == null) {
+                    // console.log("correct user!");
+                    // console.log("req.body.name: " + req.body.name);
 
                     
                     list.name = body.playlist.name;
