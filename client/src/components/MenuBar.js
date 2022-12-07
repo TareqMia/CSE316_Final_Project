@@ -186,7 +186,7 @@ const handleSubmit = (event) => {
               style={{width: '20vw'}}
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
-              value={text}
+              value={store.screen === 'HOME' ? '' : text}
             />
           </Search>
           <Box sx={{ flexGrow: 1 }}/>

@@ -152,7 +152,7 @@ function GlobalStoreContextProvider(props) {
                     listNameActive: false,
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
-                    screen: payload.screen,
+                    screen: CurrentScreen.HOME,
                     queryResult: payload.playlists,
                     searchText: ''
                 });
@@ -866,7 +866,6 @@ function GlobalStoreContextProvider(props) {
         else {
             console.log("API FAILED TO CREATE A NEW LIST");
         }
-
     }
 
     store.incrementNumberOfListens = () => {
