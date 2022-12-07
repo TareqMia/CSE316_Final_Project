@@ -144,7 +144,7 @@ function GlobalStoreContextProvider(props) {
             case GlobalStoreActionType.LOAD_ID_NAME_PAIRS: {
                 return setStore({
                     currentModal : CurrentModal.NONE,
-                    idNamePairs: payload,
+                    idNamePairs: payload.playlists,
                     currentList: null,
                     currentSongIndex: -1,
                     currentSong: null,
@@ -152,8 +152,8 @@ function GlobalStoreContextProvider(props) {
                     listNameActive: false,
                     listIdMarkedForDeletion: null,
                     listMarkedForDeletion: null,
-                    screen: CurrentScreen.HOME,
-                    queryResult: payload,
+                    screen: payload.screen,
+                    queryResult: payload.playlists,
                     searchText: ''
                 });
             }
@@ -376,7 +376,10 @@ function GlobalStoreContextProvider(props) {
                 let pairsArray = response.data.idNamePairs;
                 storeReducer({
                     type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
-                    payload: pairsArray
+                    payload: {
+                        playlists: pairsArray,
+                        screen: store.currentScreen
+                    }
                 });
             }
             else {
@@ -681,7 +684,10 @@ function GlobalStoreContextProvider(props) {
                 }
                 storeReducer({
                     type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
-                    payload: sorted
+                    payload: {
+                        playlists: sorted,
+                        currentScreen: store.currenScreen
+                    }
                 });  
                 break;
             }
@@ -701,7 +707,10 @@ function GlobalStoreContextProvider(props) {
                 }
                 storeReducer({
                     type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
-                    payload: sorted
+                    payload: {
+                        playlists: sorted,
+                        currentScreen: store.currenScreen
+                    }
                 });  
                 break;
             }
@@ -719,7 +728,10 @@ function GlobalStoreContextProvider(props) {
                 }
                 storeReducer({
                     type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
-                    payload: sorted
+                    payload: {
+                        playlists: sorted,
+                        currentScreen: store.currenScreen
+                    }
                 });  
                 break;
             }
@@ -737,7 +749,10 @@ function GlobalStoreContextProvider(props) {
                 }
                 storeReducer({
                     type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
-                    payload: sorted
+                    payload: {
+                        playlists: sorted,
+                        currentScreen: store.currenScreen
+                    }
                 });  
                 break;
             }
@@ -755,7 +770,10 @@ function GlobalStoreContextProvider(props) {
                 }
                 storeReducer({
                     type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
-                    payload: sorted
+                    payload: {
+                        playlists: sorted,
+                        currentScreen: store.currenScreen
+                    }
                 });  
                 break;
             } 
